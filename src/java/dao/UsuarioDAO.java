@@ -50,6 +50,9 @@ public class UsuarioDAO
             user.setUsername((String)result.getObject(7));
             user.setPassword((String)result.getObject(8));
             user.setEstado((int)result.getObject(9));
+            user.setNumeroCargas((int)result.getObject(10));
+            user.setContactoEmergencia((String)result.getObject(11));
+            user.setUltimoTrabajo((String)result.getObject(12));
         }
         connect.close();
         return user;
@@ -60,17 +63,20 @@ public class UsuarioDAO
         ArrayList<Usuario> arreglo = new ArrayList();
         while(result.next())
         {
-            Usuario doc = new Usuario();
-            doc.setRut((String)result.getObject(1));
-            doc.setNombre((String)result.getObject(2));
-            doc.setApellidoPaterno((String)result.getObject(3));
-            doc.setApellidoMaterno((String)result.getObject(4));
-            doc.setTipoUsuario((int)result.getObject(5));
-            doc.setCargo((String)result.getObject(6));
-            doc.setUsername((String)result.getObject(7));
-            doc.setPassword((String)result.getObject(8));
-            doc.setEstado((int)result.getObject(9));
-            arreglo.add(doc);
+            Usuario user = new Usuario();
+            user.setRut((String)result.getObject(1));
+            user.setNombre((String)result.getObject(2));
+            user.setApellidoPaterno((String)result.getObject(3));
+            user.setApellidoMaterno((String)result.getObject(4));
+            user.setTipoUsuario((int)result.getObject(5));
+            user.setCargo((String)result.getObject(6));
+            user.setUsername((String)result.getObject(7));
+            user.setPassword((String)result.getObject(8));
+            user.setEstado((int)result.getObject(9));
+            user.setNumeroCargas((int)result.getObject(10));
+            user.setContactoEmergencia((String)result.getObject(11));
+            user.setUltimoTrabajo((String)result.getObject(12));
+            arreglo.add(user);
         }
         return arreglo;
     }
@@ -100,22 +106,25 @@ public class UsuarioDAO
     
      public static boolean revisarRut(String rut) throws SQLException
     {
-        Usuario doc = new Usuario();
+        Usuario user = new Usuario();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE rut='"
                            +rut+"';");
         while(result.next())
         {
-            doc.setRut((String)result.getObject(1));
-            doc.setNombre((String)result.getObject(2));
-            doc.setApellidoPaterno((String)result.getObject(3));
-            doc.setApellidoMaterno((String)result.getObject(4));
-            doc.setTipoUsuario((int)result.getObject(5));
-            doc.setCargo((String)result.getObject(6));
-            doc.setUsername((String)result.getObject(7));
-            doc.setPassword((String)result.getObject(8));
-            doc.setEstado((int)result.getObject(9));
-            if(doc.getRut().equals(rut))
+            user.setRut((String)result.getObject(1));
+            user.setNombre((String)result.getObject(2));
+            user.setApellidoPaterno((String)result.getObject(3));
+            user.setApellidoMaterno((String)result.getObject(4));
+            user.setTipoUsuario((int)result.getObject(5));
+            user.setCargo((String)result.getObject(6));
+            user.setUsername((String)result.getObject(7));
+            user.setPassword((String)result.getObject(8));
+            user.setEstado((int)result.getObject(9));
+            user.setNumeroCargas((int)result.getObject(10));
+            user.setContactoEmergencia((String)result.getObject(11));
+            user.setUltimoTrabajo((String)result.getObject(12));
+            if(user.getRut().equals(rut))
             {
                 connect.close();
                 return false;
@@ -134,10 +143,17 @@ public class UsuarioDAO
         }
         conectar();
         state.executeUpdate("INSERT INTO usuario VALUES('"+usuario.getRut()+
-                "','"+usuario.getNombre()+"','"+usuario.getApellidoPaterno()+"','"
-                +usuario.getApellidoMaterno()+"',"+usuario.getTipoUsuario()+
-                ",'"+usuario.getCargo()+"','"+usuario.getUsername()+"','"
-                +usuario.getPassword()+"',"+usuario.getEstado()+");");
+                "','"+usuario.getNombre()+
+                "','"+usuario.getApellidoPaterno()+
+                "','"+usuario.getApellidoMaterno()+
+                "',"+usuario.getTipoUsuario()+
+                ",'"+usuario.getCargo()+
+                "','"+usuario.getUsername()+
+                "','"+usuario.getPassword()+
+                "',"+usuario.getEstado()+
+                ","+usuario.getNumeroCargas()+
+                ",'"+usuario.getContactoEmergencia()+
+                "','"+usuario.getUltimoTrabajo()+"');");
         connect.close();
         estado = true;
         return estado;
@@ -145,22 +161,42 @@ public class UsuarioDAO
     
     public static Usuario buscar(String usuario) throws SQLException
     {
-        Usuario doc = new Usuario();
+        Usuario user = new Usuario();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"+usuario+"';");
         while(result.next())
         {
-            doc.setRut((String)result.getObject(1));
-            doc.setNombre((String)result.getObject(2));
-            doc.setApellidoPaterno((String)result.getObject(3));
-            doc.setApellidoMaterno((String)result.getObject(4));
-            doc.setTipoUsuario((int)result.getObject(5));
-            doc.setCargo((String)result.getObject(6));
-            doc.setUsername((String)result.getObject(7));
-            doc.setPassword((String)result.getObject(8));
-            doc.setEstado((int)result.getObject(9));
+            user.setRut((String)result.getObject(1));
+            user.setNombre((String)result.getObject(2));
+            user.setApellidoPaterno((String)result.getObject(3));
+            user.setApellidoMaterno((String)result.getObject(4));
+            user.setTipoUsuario((int)result.getObject(5));
+            user.setCargo((String)result.getObject(6));
+            user.setUsername((String)result.getObject(7));
+            user.setPassword((String)result.getObject(8));
+            user.setEstado((int)result.getObject(9));
+            user.setNumeroCargas((int)result.getObject(10));
+            user.setContactoEmergencia((String)result.getObject(11));
+            user.setUltimoTrabajo((String)result.getObject(12));
         }
         connect.close();
-        return doc;
+        return user;
+    }
+    
+    public static boolean  agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    {
+        boolean estado=false;
+        if(!revisarRut(rut))
+        {
+            return estado;
+        }
+        conectar();
+        state.executeUpdate("INSERT INTO carga VALUES('"+rut+
+                "','"+nombre+
+                "','"+apellidoPaterno+
+                "','"+apellidoMaterno+"');");
+        connect.close();
+        estado = true;
+        return estado;
     }
 }

@@ -45,7 +45,7 @@ public class ControladorLogin extends HttpServlet
             //Qué tipo de usuario es?            
             sesion.setAttribute("usuario", user);
             sesion.setAttribute("estadoSesion", "on");    
-            sesion.setAttribute("username", usuario);    
+            //sesion.setAttribute("username", usuario);    
             
             switch(user.getTipoUsuario())
             {

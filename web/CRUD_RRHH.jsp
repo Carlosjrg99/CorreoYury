@@ -63,7 +63,13 @@
                         <option value="cargo3">Cargo tipo 3</option>
                         <option value="cargo4">Cargo tipo 4</option>
                         <option value="cargo5">Cargo tipo 5</option>
-                    </select><br><br><br>
+                    </select><br><br>
+                    <label for="numeroCargas">Número de Cargas</label>
+                    <input type="number" name="numeroCargas" required=""><br><br>
+                    <label for="contactoEmergencia">Contacto de Emergencia</label>
+                    <input type="text" name="contactoEmergencia" required=""><br><br>
+                    <label for="ultimoTrabajo">Trabajo Anterior</label>
+                    <input type="text" name="ultimoTrabajo" class="validate" required=""><br><br><br>
                     <button type="submit" name="opcion" value="Grabar">Crear</button>
                     <button type="reset">Cancelar</button>
                     <input type="submit" value="Regresar" onclick="window.location='menuRRHH.jsp';"/>

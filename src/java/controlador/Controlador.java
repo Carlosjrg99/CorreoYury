@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 
 public class Controlador extends HttpServlet 
@@ -28,6 +29,9 @@ public class Controlador extends HttpServlet
         String username="";
         String password="";
         int estado=0;
+        int numeroCargas=0;
+        String contactoEmergencia="";
+        String ultimoTrabajo="";
         String opcion=request.getParameter("opcion");
         if (opcion.equals("Grabar")) 
         {
@@ -68,23 +72,55 @@ public class Controlador extends HttpServlet
                 default:
                     break;
             }
+            numeroCargas=Integer.valueOf(request.getParameter("numeroCargas"));
+            contactoEmergencia=request.getParameter("contactoEmergencia");
+            ultimoTrabajo=request.getParameter("ultimoTrabajo");
             username = UsuarioDAO.revisionUsuario(nombre, apellidoPaterno);
                 
-            Usuario usuario=new Usuario(rut, nombre, apellidoPaterno, apellidoMaterno, tipoUsuario, cargo, username, password, estado);
-            
+            Usuario usuario=new Usuario(rut, nombre, apellidoPaterno, apellidoMaterno, tipoUsuario, cargo, username, password, estado, numeroCargas, contactoEmergencia, ultimoTrabajo);
+            HttpSession sesion = request.getSession(true);
+            sesion.setAttribute("usuarioMod", null);
             if(UsuarioDAO.agregar(usuario) == true)
             {
             //bien
-                response.sendRedirect("MensajeOk.jsp?mensaje=Usuario agregado<br>Su username es: &username="+username);
-
-                  
+                sesion.setAttribute("usuarioMod", usuario);
+                if(numeroCargas == 0)
+                {
+                    response.sendRedirect("MensajeOk.jsp?mensaje=Usuario agregado<br>Su username es: &username="+username);
+                }
+                else
+                {
+                    response.sendRedirect("AgregarCarga.jsp?rut="+rut+"&numeroCargas="+numeroCargas);
+                }
             }
             else
             {
                 response.sendRedirect("MensajeError.jsp?mensaje=Rut ya existente&retorno=");
             }
-        }    
+        } 
         
+        if(opcion.equals("Cargar"))
+        {
+            HttpSession sesion = request.getSession(true);
+            Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
+            String nombreCarga;
+            String apellidoP;
+            String apellidoM;
+            boolean s = true;
+            for(int i = 1;i <= carga.getNumeroCargas();i++) 
+            {
+                nombreCarga=request.getParameter("nombre"+String.valueOf(i));
+                apellidoP=request.getParameter("apellidoPaterno"+String.valueOf(i));
+                apellidoM=request.getParameter("apellidoMaterno"+String.valueOf(i));
+                s = UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM);
+                if(!s)
+                {
+                    response.sendRedirect("MensajeError.jsp?mensaje=Rut ya existente&retorno=");
+                    break;
+                }
+            }
+            response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
+        }
         try (PrintWriter out = response.getWriter()) 
         {
             out.println("<!DOCTYPE html>");

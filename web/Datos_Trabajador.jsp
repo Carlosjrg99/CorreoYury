@@ -60,14 +60,14 @@
                     <%
                         //String username = ;;
                         String tipo;
-                        Usuario usuario = UsuarioDAO.buscar((String)sesion.getAttribute("username"));
+                        //Usuario usuario = UsuarioDAO.buscar(user.getUsername());
                             out.println("<tr>");
-                            out.println("<td>" + usuario.getRut() + "</td>");
-                            out.println("<td>" + usuario.getNombre() + "</td>");
-                            out.println("<td>" + usuario.getApellidoPaterno() + "</td>");
-                            out.println("<td>" + usuario.getApellidoMaterno() + "</td>");
-                            out.println("<td>" + usuario.getUsername() + "</td>");
-                            switch(usuario.getTipoUsuario())
+                            out.println("<td>" + user.getRut() + "</td>");
+                            out.println("<td>" + user.getNombre() + "</td>");
+                            out.println("<td>" + user.getApellidoPaterno() + "</td>");
+                            out.println("<td>" + user.getApellidoMaterno() + "</td>");
+                            out.println("<td>" + user.getUsername() + "</td>");
+                            switch(user.getTipoUsuario())
                             {
                                 case 1:
                                     tipo="RR.HH.";
@@ -80,9 +80,9 @@
                                 break;
                             }
                             out.println("<td>" + tipo + "</td>");
-                            out.println("<td>" + usuario.getCargo()+ "</td>");
-                            out.println("<td><a href='Eliminar.jsp?rut=" + usuario.getRut() + "'>eliminar</a></td>");
-                            out.println("<td><a href='Modificar.jsp?rut=" + usuario.getRut() + "'>modificar</a></td>");
+                            out.println("<td>" + user.getCargo()+ "</td>");
+                            out.println("<td><a href='Eliminar.jsp?rut=" + user.getRut() + "'>eliminar</a></td>");
+                            out.println("<td><a href='Modificar.jsp?rut=" + user.getRut() + "'>modificar</a></td>");
                             out.println("</tr>");
                         
                     %>
