@@ -183,20 +183,20 @@ public class UsuarioDAO
         return user;
     }
     
-    public static boolean  agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    public static void  agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
     {
-        boolean estado=false;
+        /*boolean estado=false;
         if(!revisarRut(rut))
         {
             return estado;
-        }
+        }*/
         conectar();
         state.executeUpdate("INSERT INTO carga VALUES('"+rut+
                 "','"+nombre+
                 "','"+apellidoPaterno+
                 "','"+apellidoMaterno+"');");
         connect.close();
-        estado = true;
-        return estado;
+        /*estado = true;
+        return estado;*/
     }
 }

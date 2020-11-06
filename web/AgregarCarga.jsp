@@ -1,9 +1,3 @@
-<%-- 
-    Document   : AgregarCarga
-    Created on : 05/11/2020, 05:30:16 PM
-    Author     : Carlo
---%>
-
 <%@page import="dao.UsuarioDAO"%>
 <%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Registrar cargas</title>
         <style>
             table, th, td 
             {
@@ -54,12 +48,12 @@
               numeroCargas=Integer.valueOf(request.getParameter("numeroCargas"));
               rut=request.getParameter("rut");
          %>
-        <h1>Hello World!</h1>
+        <h1>Ingresar Datos!</h1>
         <form action="Controlador" method="POST" >
-        <table>
             <%
                 for (int i = 1;i <= numeroCargas;i++) 
                 {%>
+        <table>
                 <thead>
                 <tr>
                         <th>Rut Apoderado
@@ -71,17 +65,17 @@
                 <tbody><%
                             out.println("<tr>");
                             out.println("<td>" + rut + "</td>");
-                            out.println("<td><input type='text' name='nombre"+String.valueOf(i)+"' required=''></td>");
-                            out.println("<td><input type='text' name='apellidoPaterno"+String.valueOf(i)+"' required=''></td>");
-                            out.println("<td><input type='text' name='apellidoMaterno"+String.valueOf(i)+"' required=''></td>");
+                            out.println("<td><input type='text' name='nombre"+i+"' required=''></td>");
+                            out.println("<td><input type='text' name='apellidoPaterno"+i+"' required=''></td>");
+                            out.println("<td><input type='text' name='apellidoMaterno"+i+"' required=''></td>");
                             out.println("</tr>");
                         
                     
                             %>
-                </tbody>
-            <%}%>
-        </table>
+                </tbody><br>
+                    
+        </table><br><%}%><br>
             <button type="submit" name="opcion" value="Cargar">Agregar</button>
-        </form>        
+        </form>     
     </body>
 </html>

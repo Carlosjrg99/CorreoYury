@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 05, 2020 at 06:57 AM
+-- Generation Time: Nov 06, 2020 at 07:48 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -35,6 +35,17 @@ CREATE TABLE `carga` (
   `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `carga`
+--
+
+INSERT INTO `carga` (`rutApoderado`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
+('2222222-2', 'Felipe', 'Ramirez', 'Romero'),
+('2222222-2', 'Marian', 'Ramirez', 'Romero'),
+('2222222-2', 'Sebastian', 'Ramirez', 'Romero'),
+('33333333-3', 'Mariana', 'Jimenez', 'Romero'),
+('33333333-3', 'Mariano', 'Jimenez', 'Romero');
+
 -- --------------------------------------------------------
 
 --
@@ -61,12 +72,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `tipoUsuario`, `cargo`, `username`, `password`, `estado`, `numeroCargas`, `contactoEmergencia`, `ultimoTrabajo`) VALUES
-('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 1, '', 'rvasquez0', '123456', 0, 0, '', ''),
-('2222222-2', 'Raúl', 'Mendoza', 'Martínez', 2, '', 'rmendoza0', '123456', 0, 0, '', ''),
-('33333333-3', 'Roman', 'Benitez', 'Ramirez', 2, 'Recursos Humanos', 'rbenitez0', '123456', 0, 0, '', ''),
-('44444444-4', 'Valentina', 'Ramirez', 'Gonzalez', 2, 'Cargo tipo 1', 'vramirez0', '123456', 0, 0, '', ''),
-('5555555-5', 'Valentina', 'Perez', 'Rosales', 2, 'Cargo tipo 2', 'vperez0', '123456', 0, 0, '', ''),
-('2666666-4', 'Juan', 'Perez', 'Ramirez', 1, 'Administrador', 'jperez0', '123456', 0, 0, '', '');
+('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 1, 'Recursos Humanos', 'rvasquez0', '123456', 0, 0, '99999199', 'Administrador'),
+('2222222-2', 'Valentina', 'Romero', 'Ramirez', 1, 'Recursos Humanos', 'vromero0', '123456', 0, 3, '999999991', 'Astronauta'),
+('33333333-3', 'Carlos', 'Marambio', 'Perez', 2, 'Cargo tipo 1', 'cmarambio0', '123456', 0, 2, '99999999', 'Fisico Culturista');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

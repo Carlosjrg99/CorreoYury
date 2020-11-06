@@ -101,25 +101,31 @@ public class Controlador extends HttpServlet
         
         if(opcion.equals("Cargar"))
         {
-            HttpSession sesion = request.getSession(true);
-            Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
             String nombreCarga;
             String apellidoP;
             String apellidoM;
             boolean s = true;
+            /*nombreCarga=request.getParameter("nombre");
+            apellidoP=request.getParameter("apellidoPaterno");
+            apellidoM=request.getParameter("apellidoMaterno");*/
+            HttpSession sesion = request.getSession(true);
+            Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
+            /*if(UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM))
+            {
+                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
+            }
+            else
+            {
+                response.sendRedirect("MensajeError.jsp?mensaje=No se encuentra rut&retorno=");
+            }*/
             for(int i = 1;i <= carga.getNumeroCargas();i++) 
             {
-                nombreCarga=request.getParameter("nombre"+String.valueOf(i));
-                apellidoP=request.getParameter("apellidoPaterno"+String.valueOf(i));
-                apellidoM=request.getParameter("apellidoMaterno"+String.valueOf(i));
-                s = UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM);
-                if(!s)
-                {
-                    response.sendRedirect("MensajeError.jsp?mensaje=Rut ya existente&retorno=");
-                    break;
-                }
+                nombreCarga=request.getParameter("nombre"+i);
+                apellidoP=request.getParameter("apellidoPaterno"+i);
+                apellidoM=request.getParameter("apellidoMaterno"+i);
+                UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM);
             }
-            response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
+                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
         }
         try (PrintWriter out = response.getWriter()) 
         {
