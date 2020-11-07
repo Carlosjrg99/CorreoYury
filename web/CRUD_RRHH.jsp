@@ -37,7 +37,7 @@
             }
             %>
     <center>
-            <h1>CRUD de Trabajadores</h1>
+            <h1>FICHA de Trabajadores</h1>
                 <form action="Controlador" method="POST" onsubmit="return validacion();">
                     <label for="rut">Rut</label>
                     <input type="text" name="rut" id="rut" class="validate" required=""><br><br>
@@ -65,7 +65,7 @@
                         <option value="cargo5">Cargo tipo 5</option>
                     </select><br><br>
                     <label for="numeroCargas">Número de Cargas</label>
-                    <input type="number" name="numeroCargas" required=""><br><br>
+                    <input type="number" name="numeroCargas" required="" min="0" value="0"><br><br>
                     <label for="contactoEmergencia">Contacto de Emergencia</label>
                     <input type="text" name="contactoEmergencia" required=""><br><br>
                     <label for="ultimoTrabajo">Trabajo Anterior</label>

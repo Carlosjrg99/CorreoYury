@@ -39,7 +39,7 @@
                     }
                 }
          %>
-        
+         <h1>MENÚ RR.HH.!</h1>
         <ul>
             <li><a href="CRUD_RRHH.jsp">Crear trabajador</a></li>
             <li><a href="menuTrabajador.jsp">Acceder como trabajador</a></li>

@@ -53,7 +53,7 @@
                         <th>Usuario
                         <th>Tipo
                         <th>Cargo
-                        <th style="text-align: center;" colspan="2">Editar
+                        <th>Editar
                 </tr>
               </thead>
               <tbody>
@@ -81,12 +81,19 @@
                             }
                             out.println("<td>" + tipo + "</td>");
                             out.println("<td>" + user.getCargo()+ "</td>");
-                            out.println("<td><a href='Eliminar.jsp?rut=" + user.getRut() + "'>eliminar</a></td>");
                             out.println("<td><a href='Modificar.jsp?rut=" + user.getRut() + "'>modificar</a></td>");
                             out.println("</tr>");
                         
                     %>
                     </tbody>
-            </table>
+        </table><br><br><br>
+        
+        <button onclick="goBack()">Regresar</button>
+        <script>
+            function goBack() 
+            {
+                window.history.back();
+            }
+        </script>
     </body>
 </html>

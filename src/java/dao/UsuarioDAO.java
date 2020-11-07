@@ -199,4 +199,31 @@ public class UsuarioDAO
         /*estado = true;
         return estado;*/
     }
+    
+    public static boolean  modificar(Usuario usuario, String contacto, String password, int cargas) throws SQLException
+    {
+        boolean estado=false;
+        int numCargas = cargas + usuario.getNumeroCargas();
+        conectar();
+        if(!contacto.isEmpty())
+        {
+            state.executeUpdate("UPDATE usuario SET contactoEmergencia='"
+                    +contacto+"' WHERE rut='"+usuario.getRut()+"';");
+            estado = true;
+        }
+        if(!password.isEmpty())
+        {
+            state.executeUpdate("UPDATE usuario SET password='"
+                    +password+"' WHERE rut='"+usuario.getRut()+"';");
+            estado = true;
+        }
+        if(cargas > 0)
+        {
+            state.executeUpdate("UPDATE usuario SET numeroCargas='"
+                    +numCargas+"' WHERE rut='"+usuario.getRut()+"';");
+            estado = true;
+        }
+        connect.close();
+        return estado;         
+    }  
 }

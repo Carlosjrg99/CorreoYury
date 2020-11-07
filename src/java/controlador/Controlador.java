@@ -84,6 +84,7 @@ public class Controlador extends HttpServlet
             {
             //bien
                 sesion.setAttribute("usuarioMod", usuario);
+                sesion.setAttribute("numeroCargasMod", numeroCargas);
                 if(numeroCargas == 0)
                 {
                     response.sendRedirect("MensajeOk.jsp?mensaje=Usuario agregado<br>Su username es: &username="+username);
@@ -110,6 +111,7 @@ public class Controlador extends HttpServlet
             apellidoM=request.getParameter("apellidoMaterno");*/
             HttpSession sesion = request.getSession(true);
             Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
+            int numCargas = (int) sesion.getAttribute("numeroCargasMod");
             /*if(UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM))
             {
                 response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
@@ -118,7 +120,7 @@ public class Controlador extends HttpServlet
             {
                 response.sendRedirect("MensajeError.jsp?mensaje=No se encuentra rut&retorno=");
             }*/
-            for(int i = 1;i <= carga.getNumeroCargas();i++) 
+            for(int i = 1;i <= numCargas;i++) 
             {
                 nombreCarga=request.getParameter("nombre"+i);
                 apellidoP=request.getParameter("apellidoPaterno"+i);
@@ -127,6 +129,27 @@ public class Controlador extends HttpServlet
             }
                 response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
         }
+        
+        if(opcion.equals("Modificar"))
+        {
+            HttpSession sesion = request.getSession(true);
+            contactoEmergencia = request.getParameter("contacto");
+            password = request.getParameter("pass");
+            numeroCargas = Integer.valueOf(request.getParameter("cargas"));
+            Usuario user = (Usuario) sesion.getAttribute("usuario");
+            UsuarioDAO.modificar(user, contactoEmergencia, password, numeroCargas);
+            sesion.setAttribute("usuarioMod", UsuarioDAO.buscar(user.getUsername()));
+            sesion.setAttribute("numeroCargasMod", numeroCargas);
+            if(numeroCargas == 0)
+            {
+                response.sendRedirect("MensajeOk.jsp?mensaje=Datos modificados, &username="+user.getUsername());
+            }
+            else
+            {
+                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRut()+"&numeroCargas="+numeroCargas);
+            }
+        }
+        
         try (PrintWriter out = response.getWriter()) 
         {
             out.println("<!DOCTYPE html>");
