@@ -16,6 +16,7 @@ public class UsuarioDAO
     
     public static void conectar()
     {
+        //método que conecta con BD
         try
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -30,11 +31,13 @@ public class UsuarioDAO
     
     public static int getSW()
     {
+        //método que recupera estado
          return sw;
     }
     
     public static Usuario login(String usuario,String pass) throws SQLException
     {
+        //método que se encarga de validar el usuario y la contraseña
         Usuario user = new Usuario();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"
@@ -60,6 +63,7 @@ public class UsuarioDAO
     
     public static ArrayList<Usuario> getArreglo(ResultSet result) throws SQLException
     {
+        //Se encarga de recuperar en un ArrayList objetos a partir del ResultSet
         ArrayList<Usuario> arreglo = new ArrayList();
         while(result.next())
         {
@@ -83,6 +87,7 @@ public class UsuarioDAO
     
     public static String revisionUsuario(String nombre, String apellido) throws SQLException
     {
+        //método que se encarga de crear un usuario único a partir del nombre y apellido
         ArrayList<Usuario> alUsuarios = new ArrayList();
         String username="";
         String usernamecito;
@@ -106,6 +111,7 @@ public class UsuarioDAO
     
      public static boolean revisarRut(String rut) throws SQLException
     {
+        //método que se encarga de revisar si existe un usuario con el rut inidicado
         Usuario user = new Usuario();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE rut='"
@@ -126,6 +132,7 @@ public class UsuarioDAO
             user.setUltimoTrabajo((String)result.getObject(12));
             if(user.getRut().equals(rut))
             {
+                //el rut ya ha sido registrado con otro usuario
                 connect.close();
                 return false;
             }
@@ -136,6 +143,7 @@ public class UsuarioDAO
     
     public static boolean  agregar(Usuario usuario) throws SQLException
     {
+        //método que agrega un usuario a la BD
         boolean estado=false;
         if(!revisarRut(usuario.getRut()))
         {
@@ -161,6 +169,7 @@ public class UsuarioDAO
     
     public static Usuario buscar(String usuario) throws SQLException
     {
+        //método que regresa a usuario con nombre de usuario inidicado
         Usuario user = new Usuario();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"+usuario+"';");
@@ -183,25 +192,20 @@ public class UsuarioDAO
         return user;
     }
     
-    public static void  agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
     {
-        /*boolean estado=false;
-        if(!revisarRut(rut))
-        {
-            return estado;
-        }*/
+        //método que agrega carga a un usuario existente
         conectar();
         state.executeUpdate("INSERT INTO carga VALUES('"+rut+
                 "','"+nombre+
                 "','"+apellidoPaterno+
                 "','"+apellidoMaterno+"');");
         connect.close();
-        /*estado = true;
-        return estado;*/
     }
     
     public static boolean  modificar(Usuario usuario, String contacto, String password, int cargas) throws SQLException
     {
+        //método que permite modificar los datos en la BD de un trabajador
         boolean estado=false;
         int numCargas = cargas + usuario.getNumeroCargas();
         conectar();

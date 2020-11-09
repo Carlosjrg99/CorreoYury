@@ -21,7 +21,6 @@ public class ControladorLogin extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         String usuario, clave;
         
-        //paso1:
         //recuperar datos del form
         usuario=request.getParameter("usuario");
         clave=request.getParameter("clave");
@@ -33,8 +32,8 @@ public class ControladorLogin extends HttpServlet
                  
         
         // validar si el usuario existe   login (usuario, clave) 
-        //   (!= null)  si, entonce muestro menú
-        //  (null)  no, mensaje de error y botón volver al login (index)       
+        // si (!= null) entonce muestro menú
+        //  (null) mensaje de error y botón volver al login (index)       
         
         Usuario user=UsuarioDAO.login(usuario, clave);
         if(user != null)
@@ -44,11 +43,11 @@ public class ControladorLogin extends HttpServlet
             //enviar al index
             //Qué tipo de usuario es?            
             sesion.setAttribute("usuario", user);
-            sesion.setAttribute("estadoSesion", "on");    
-            //sesion.setAttribute("username", usuario);    
+            sesion.setAttribute("estadoSesion", "on");
             
             switch(user.getTipoUsuario())
             {
+            //enviar al menu correspondiente
                 case 1:
                     response.sendRedirect("menuRRHH.jsp");
                     break;
@@ -64,7 +63,7 @@ public class ControladorLogin extends HttpServlet
         {
             //error no existe
             //dejar sesión en false
-            //mensaje de error volver al index           
+            //mensaje de error volver al index   
             
             response.sendRedirect("MensajeError.jsp?mensaje=Error, usuario o clave incorrectos&retorno=index.jsp");
         }

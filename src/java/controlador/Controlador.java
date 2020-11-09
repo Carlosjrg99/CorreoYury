@@ -33,8 +33,10 @@ public class Controlador extends HttpServlet
         String contactoEmergencia="";
         String ultimoTrabajo="";
         String opcion=request.getParameter("opcion");
+            //Recibe el valor de opcion de algún botón para realizar acciones
         if (opcion.equals("Grabar")) 
         {
+            //Para grabar en la BD un nuevo usuario
             rut=request.getParameter("rut");
             nombre=request.getParameter("nombre");
             apellidoPaterno=request.getParameter("apellidoPaterno");
@@ -102,24 +104,14 @@ public class Controlador extends HttpServlet
         
         if(opcion.equals("Cargar"))
         {
+            //Para agregar cargas en la BD un usuario existente
+            //Posterior a Grabar en el caso de indicar cargas
             String nombreCarga;
             String apellidoP;
             String apellidoM;
-            boolean s = true;
-            /*nombreCarga=request.getParameter("nombre");
-            apellidoP=request.getParameter("apellidoPaterno");
-            apellidoM=request.getParameter("apellidoMaterno");*/
             HttpSession sesion = request.getSession(true);
             Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
             int numCargas = (int) sesion.getAttribute("numeroCargasMod");
-            /*if(UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM))
-            {
-                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
-            }
-            else
-            {
-                response.sendRedirect("MensajeError.jsp?mensaje=No se encuentra rut&retorno=");
-            }*/
             for(int i = 1;i <= numCargas;i++) 
             {
                 nombreCarga=request.getParameter("nombre"+i);
@@ -132,6 +124,7 @@ public class Controlador extends HttpServlet
         
         if(opcion.equals("Modificar"))
         {
+            //Permite modificar algunos de sus datos en la BD a los trabajadores
             HttpSession sesion = request.getSession(true);
             contactoEmergencia = request.getParameter("contacto");
             password = request.getParameter("pass");
