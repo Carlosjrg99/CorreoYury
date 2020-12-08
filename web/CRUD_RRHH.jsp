@@ -38,7 +38,7 @@
             %>
     <center>
             <h1>FICHA de Trabajadores</h1>
-                <form action="Controlador" method="POST" onsubmit="return validacion();">
+                <form action="ControladorGrabarUsuario" method="POST" onsubmit="return validacion();">
                     <label for="rut">Rut</label>
                     <input type="text" name="rut" id="rut" class="validate" required=""><br><br>
                     <label for="nombre">Nombre</label>

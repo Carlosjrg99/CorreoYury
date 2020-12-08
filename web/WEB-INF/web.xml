@@ -5,16 +5,24 @@
         <servlet-class>controlador.ControladorLogin</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Controlador</servlet-name>
-        <servlet-class>controlador.Controlador</servlet-class>
+        <servlet-name>ControladorGrabarUsuario</servlet-name>
+        <servlet-class>controlador.ControladorGrabarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorCargarCargas</servlet-name>
+        <servlet-class>controlador.ControladorCargarCargas</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControladorLogin</servlet-name>
         <url-pattern>/ControladorLogin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Controlador</servlet-name>
-        <url-pattern>/Controlador</url-pattern>
+        <servlet-name>ControladorGrabarUsuario</servlet-name>
+        <url-pattern>/ControladorGrabarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCargarCargas</servlet-name>
+        <url-pattern>/ControladorCargarCargas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

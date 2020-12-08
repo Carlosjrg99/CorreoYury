@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 
-public class Controlador extends HttpServlet 
+public class ControladorGrabarUsuario extends HttpServlet 
 {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -102,47 +102,6 @@ public class Controlador extends HttpServlet
             }
         } 
         
-        if(opcion.equals("Cargar"))
-        {
-            //Para agregar cargas en la BD un usuario existente
-            //Posterior a Grabar en el caso de indicar cargas
-            String nombreCarga;
-            String apellidoP;
-            String apellidoM;
-            HttpSession sesion = request.getSession(true);
-            Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
-            int numCargas = (int) sesion.getAttribute("numeroCargasMod");
-            for(int i = 1;i <= numCargas;i++) 
-            {
-                nombreCarga=request.getParameter("nombre"+i);
-                apellidoP=request.getParameter("apellidoPaterno"+i);
-                apellidoM=request.getParameter("apellidoMaterno"+i);
-                UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM);
-            }
-                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
-        }
-        
-        if(opcion.equals("Modificar"))
-        {
-            //Permite modificar algunos de sus datos en la BD a los trabajadores
-            HttpSession sesion = request.getSession(true);
-            contactoEmergencia = request.getParameter("contacto");
-            password = request.getParameter("pass");
-            numeroCargas = Integer.valueOf(request.getParameter("cargas"));
-            Usuario user = (Usuario) sesion.getAttribute("usuario");
-            UsuarioDAO.modificar(user, contactoEmergencia, password, numeroCargas);
-            sesion.setAttribute("usuarioMod", UsuarioDAO.buscar(user.getUsername()));
-            sesion.setAttribute("numeroCargasMod", numeroCargas);
-            if(numeroCargas == 0)
-            {
-                response.sendRedirect("MensajeOk.jsp?mensaje=Datos modificados, &username="+user.getUsername());
-            }
-            else
-            {
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRut()+"&numeroCargas="+numeroCargas);
-            }
-        }
-        
         try (PrintWriter out = response.getWriter()) 
         {
             out.println("<!DOCTYPE html>");
@@ -171,7 +130,7 @@ public class Controlador extends HttpServlet
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorGrabarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -189,7 +148,7 @@ public class Controlador extends HttpServlet
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorGrabarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

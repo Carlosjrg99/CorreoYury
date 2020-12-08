@@ -46,7 +46,7 @@
         //String nombreCompleto = user.getNombre()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno();
     %><center>
             <h1>MODIFICAR</h1>
-            <form action="Controlador" method="POST" onsubmit="return validacion();">
+            <form action="ControladorModificarUsuario" method="POST" onsubmit="return validacion();">
                         <h2><%out.println(nombreCompleto);%></h2>
                         <label for="contacto">Cambiar Contacto de Emergencia</label>
                         <input placeholder="<%=contacto%>" type="text" name="contacto"><br><br>

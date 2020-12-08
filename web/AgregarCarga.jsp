@@ -49,7 +49,7 @@
               rut=request.getParameter("rut");
          %>
         <h1>Ingresar Datos!</h1>
-        <form action="Controlador" method="POST" >
+        <form action="ControladorCargarCargas" method="POST" >
             <%
                 for (int i = 1;i <= numeroCargas;i++) 
                 {%>

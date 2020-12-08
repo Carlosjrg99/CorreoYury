@@ -9,8 +9,14 @@
         <%
               String mensaje;
               String username;
+              
               mensaje=request.getParameter("mensaje");
               username=request.getParameter("username");
+              
+              Usuario user=null;
+              
+              HttpSession sesion = request.getSession(true);
+              user=(Usuario)sesion.getAttribute("usuario");
          %>
         
         
@@ -28,6 +34,27 @@
             window.history.back();
         }
         </script>
+        <br>
+        <%
+            switch(user.getTipoUsuario())
+            {
+                case 1:
+                    out.println("<form action='menuRRHH.jsp'>");
+                    out.println("<input type='submit' value='Menu'/>");
+                    out.println("</form>");
+                    break;
+                case 2:
+                    out.println("<form action='menuTrabajador.jsp'>");
+                    out.println("<input type='submit' value='Menu'/>");
+                    out.println("</form>");
+                    break;
+                default:
+                    response.sendRedirect("CerrarSesion.jsp");
+                    break;
+            }
+            if(user.getTipoUsuario()==1)
+        {
+        }%>
     </center>
 </body>
 </html>
