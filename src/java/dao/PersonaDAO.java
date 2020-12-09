@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dao;
 
 import java.sql.Connection;
@@ -8,8 +13,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.Usuario;
 
-public class UsuarioDAO 
-{    
+/**
+ *
+ * @author Carlo
+ */
+public class PersonaDAO {
+        
     private static Connection connect;
     private static Statement state;
     private static int sw=0;

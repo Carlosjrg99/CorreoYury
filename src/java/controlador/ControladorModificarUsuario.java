@@ -62,7 +62,7 @@ public class ControladorModificarUsuario extends HttpServlet {
             }
             else
             {
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRut()+"&numeroCargas="+numeroCargas);
+                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado()+"&numeroCargas="+numeroCargas);
             }
         }
             out.println("<!DOCTYPE html>");
