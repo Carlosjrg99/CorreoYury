@@ -193,11 +193,13 @@ public class ContactoDAO {
         return user;
     }
     
-    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    public static void agregarContacto(String rut, String numeroTelefonico, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
     {
         //método que agrega carga a un usuario existente
         conectar();
-        state.executeUpdate("INSERT INTO carga VALUES('"+rut+
+        state.executeUpdate("INSERT INTO contacto VALUES("+0+
+                ",'"+rut+
+                "','"+numeroTelefonico+
                 "','"+nombre+
                 "','"+apellidoPaterno+
                 "','"+apellidoMaterno+"');");
@@ -231,4 +233,18 @@ public class ContactoDAO {
         connect.close();
         return estado;         
     }  
+    
+       
+    public static int getNumeroContactos(String rut) throws SQLException
+    {
+        int numeroContactos = 0;
+        conectar();    
+        ResultSet result = state.executeQuery("SELECT * FROM trabajo WHERE rutEmpleado='"+rut+"';");
+        while(result.next())
+        {
+            numeroContactos++;
+        }
+        connect.close();
+        return numeroContactos;
+    }
 }

@@ -1,3 +1,5 @@
+<%@page import="dao.PersonaDAO"%>
+<%@page import="modelo.Persona"%>
 <%@page import="dao.UsuarioDAO"%>
 <%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,7 +24,9 @@
 
                 user=(Usuario)sesion.getAttribute("usuario");
                 estadoSesion=(String) sesion.getAttribute("estadoSesion");   
-
+                
+                Persona persona = PersonaDAO.buscar(user.getRutEmpleado());
+                
                 if(estadoSesion == null )
                 {
                     response.sendRedirect("MensajeError.jsp?mensaje=Error, ingresar como trabajador&retorno=index.jsp");
@@ -62,10 +66,10 @@
                         String tipo;
                         //Usuario usuario = UsuarioDAO.buscar(user.getUsername());
                             out.println("<tr>");
-                            out.println("<td>" + user.getRut() + "</td>");
-                            out.println("<td>" + user.getNombre() + "</td>");
-                            out.println("<td>" + user.getApellidoPaterno() + "</td>");
-                            out.println("<td>" + user.getApellidoMaterno() + "</td>");
+                            out.println("<td>" + persona.getRut() + "</td>");
+                            out.println("<td>" + persona.getNombre() + "</td>");
+                            out.println("<td>" + persona.getApellidoPaterno() + "</td>");
+                            out.println("<td>" + persona.getApellidoMaterno() + "</td>");
                             out.println("<td>" + user.getUsername() + "</td>");
                             switch(user.getTipoUsuario())
                             {
@@ -80,8 +84,8 @@
                                 break;
                             }
                             out.println("<td>" + tipo + "</td>");
-                            out.println("<td>" + user.getCargo()+ "</td>");
-                            out.println("<td><a href='Modificar.jsp?rut=" + user.getRut() + "'>modificar</a></td>");
+                            out.println("<td>" + persona.getCargo()+ "</td>");
+                            out.println("<td><a href='Modificar.jsp?rut=" + persona.getRut() + "'>modificar</a></td>");
                             out.println("</tr>");
                         
                     %>

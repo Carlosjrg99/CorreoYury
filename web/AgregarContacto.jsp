@@ -45,26 +45,28 @@
         <%
               int numeroCargas;
               String rut;
-              numeroCargas= (Integer) sesion.getAttribute("numeroCargasMod");
+              numeroCargas= (Integer) sesion.getAttribute("numeroContactosMod");
               rut=request.getParameter("rut");
          %>
         <h1>Ingresar Datos!</h1>
-        <form action="ControladorCargarCargas" method="POST" >
+        <form action="ControladorCargarContactos" method="POST" >
             <%
                 for (int i = 1;i <= numeroCargas;i++) 
                 {%>
         <table>
                 <thead>
                 <tr>
-                        <th>Rut Apoderado
+                        <th>Rut Empleado
+                        <th>Numero del Contacto
                         <th>Nombre
-                        <th>Apellido 1
-                        <th>Apellido 2
+                        <th>Apellido Paterno
+                        <th>Apellido Materno
                 </tr>
                 </thead>
                 <tbody><%
                             out.println("<tr>");
                             out.println("<td>" + rut + "</td>");
+                            out.println("<td><input type='text' name='numeroTelefonico"+i+"' required=''></td>");
                             out.println("<td><input type='text' name='nombre"+i+"' required=''></td>");
                             out.println("<td><input type='text' name='apellidoPaterno"+i+"' required=''></td>");
                             out.println("<td><input type='text' name='apellidoMaterno"+i+"' required=''></td>");

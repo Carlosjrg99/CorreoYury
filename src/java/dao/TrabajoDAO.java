@@ -231,4 +231,18 @@ public class TrabajoDAO {
         connect.close();
         return estado;         
     }  
+    
+        
+    public static int getNumeroTrabajos(String rut) throws SQLException
+    {
+        int numeroTrabajos = 0;
+        conectar();    
+        ResultSet result = state.executeQuery("SELECT * FROM trabajo WHERE rutEmpleado='"+rut+"';");
+        while(result.next())
+        {
+            numeroTrabajos++;
+        }
+        connect.close();
+        return numeroTrabajos;
+    }
 }

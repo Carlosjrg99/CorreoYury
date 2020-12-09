@@ -1,3 +1,8 @@
+<%@page import="dao.ContactoDAO"%>
+<%@page import="dao.TrabajoDAO"%>
+<%@page import="dao.CargaDAO"%>
+<%@page import="modelo.Persona"%>
+<%@page import="dao.PersonaDAO"%>
 <%@page import="dao.UsuarioDAO"%>
 <%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -38,9 +43,10 @@
                 %>
     <%
         Usuario usuario = UsuarioDAO.buscar(user.getUsername());
-        String contacto = usuario.getContactoEmergencia();
-        int cargas = usuario.getNumeroCargas();
-        String nombreCompleto = usuario.getNombre()+" "+usuario.getApellidoPaterno()+" "+usuario.getApellidoMaterno();
+        Persona persona = PersonaDAO.buscar(usuario.getRutEmpleado());
+        int contactos = ContactoDAO.getNumeroContactos(persona.getRut());
+        int cargas = CargaDAO.getNumeroCargas(persona.getRut());
+        String nombreCompleto = persona.getNombre()+" "+persona.getApellidoPaterno()+" "+persona.getApellidoMaterno();
         
         //String rut = user.getRut();
         //String nombreCompleto = user.getNombre()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno();
@@ -49,7 +55,7 @@
             <form action="ControladorModificarUsuario" method="POST" onsubmit="return validacion();">
                         <h2><%out.println(nombreCompleto);%></h2>
                         <label for="contacto">Cambiar Contacto de Emergencia</label>
-                        <input placeholder="<%=contacto%>" type="text" name="contacto"><br><br>
+                        <input placeholder="Contactos actuales: <%=contactos%>" type="number" name="contactos" min="0" value="0"><br><br>
                         <label for="contacto">Añadir Cargas</label>
                         <input placeholder="Cargas actuales: <%=cargas%>" type="number" name="cargas" min="0" value="0"><br><br>
                         <h3>Cambiar Contraseña</h3>

@@ -44,18 +44,10 @@ public class UsuarioDAO
                            +usuario+"' AND password='"+pass+"';");
         while(result.next())
         {
-            user.setRut((String)result.getObject(1));/*
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));*/
-            user.setTipoUsuario((int)result.getObject(2));
-            //user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(3));
-            user.setPassword((String)result.getObject(4));
-            /*user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));*/
+            user.setUsername((String)result.getObject(1));
+            user.setRutEmpleado((String)result.getObject(2));
+            user.setPassword((String)result.getObject(3));
+            user.setTipoUsuario((int)result.getObject(4));
         }
         connect.close();
         return user;
@@ -167,58 +159,42 @@ public class UsuarioDAO
         ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"+usuario+"';");
         while(result.next())
         {
-            user.setRut((String)result.getObject(1));
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
+            user.setUsername((String)result.getObject(1));
+            user.setRutEmpleado((String)result.getObject(2));
+            user.setPassword((String)result.getObject(3));
+            user.setTipoUsuario((int)result.getObject(4));
         }
         connect.close();
         return user;
     }
     
-    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
-    {
-        //método que agrega carga a un usuario existente
-        conectar();
-        state.executeUpdate("INSERT INTO carga VALUES('"+rut+
-                "','"+nombre+
-                "','"+apellidoPaterno+
-                "','"+apellidoMaterno+"');");
-        connect.close();
-    }
     
-    public static boolean  modificar(Usuario usuario, String contacto, String password, int cargas) throws SQLException
+    
+    public static boolean  modificar(Usuario usuario, String password) throws SQLException
     {
         //método que permite modificar los datos en la BD de un trabajador
         boolean estado=false;
-        int numCargas = cargas + usuario.getNumeroCargas();
-        conectar();
-        if(!contacto.isEmpty())
+        /*int numCargas = cargas + CargaDAO.getNumeroCargas(usuario.getRutEmpleado());
+        int numContactos = contactos + ContactoDAO.getNumeroContactos(usuario.getRutEmpleado());*/
+        conectar();/*
+        if(contacto > 0)
         {
             state.executeUpdate("UPDATE usuario SET contactoEmergencia='"
                     +contacto+"' WHERE rut='"+usuario.getRut()+"';");
             estado = true;
-        }
+        }*/
         if(!password.isEmpty())
         {
             state.executeUpdate("UPDATE usuario SET password='"
-                    +password+"' WHERE rut='"+usuario.getRut()+"';");
+                    +password+"' WHERE username='"+usuario.getUsername()+"';");
             estado = true;
         }
-        if(cargas > 0)
+        /*if(cargas > 0)
         {
             state.executeUpdate("UPDATE usuario SET numeroCargas='"
                     +numCargas+"' WHERE rut='"+usuario.getRut()+"';");
             estado = true;
-        }
+        }*/
         connect.close();
         return estado;         
     }  

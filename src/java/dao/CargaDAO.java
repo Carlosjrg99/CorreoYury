@@ -197,7 +197,8 @@ public class CargaDAO {
     {
         //método que agrega carga a un usuario existente
         conectar();
-        state.executeUpdate("INSERT INTO carga VALUES('"+rut+
+        state.executeUpdate("INSERT INTO carga VALUES("+0+
+                ",'"+rut+
                 "','"+nombre+
                 "','"+apellidoPaterno+
                 "','"+apellidoMaterno+"');");
@@ -231,4 +232,17 @@ public class CargaDAO {
         connect.close();
         return estado;         
     }  
+    
+    public static int getNumeroCargas(String rut) throws SQLException
+    {
+        int numeroCargas = 0;
+        conectar();    
+        ResultSet result = state.executeQuery("SELECT * FROM carga WHERE rutEmpleado='"+rut+"';");
+        while(result.next())
+        {
+            numeroCargas++;
+        }
+        connect.close();
+        return numeroCargas;
+    }
 }

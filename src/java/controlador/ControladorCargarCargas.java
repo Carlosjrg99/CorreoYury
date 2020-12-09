@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import dao.UsuarioDAO;
+import dao.CargaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -55,9 +55,18 @@ public class ControladorCargarCargas extends HttpServlet {
                 nombreCarga=request.getParameter("nombre"+i);
                 apellidoP=request.getParameter("apellidoPaterno"+i);
                 apellidoM=request.getParameter("apellidoMaterno"+i);
-                UsuarioDAO.agregarCarga(carga.getRut(), nombreCarga, apellidoP, apellidoM);
+                CargaDAO.agregarCarga(carga.getRutEmpleado(), nombreCarga, apellidoP, apellidoM);
             }
+            if((String) sesion.getAttribute("contactar") == null)
+            {
                 response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
+            }
+            else
+            {
+                sesion.setAttribute("contactar", null);
+                response.sendRedirect("AgregarContacto.jsp?rut="+carga.getRutEmpleado());
+            }
+                
         }
         
             out.println("<!DOCTYPE html>");

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import modelo.Persona;
 import modelo.Usuario;
 
 /**
@@ -168,26 +169,20 @@ public class PersonaDAO {
         return estado;
     }
     
-    public static Usuario buscar(String usuario) throws SQLException
+    public static Persona buscar(String rut) throws SQLException
     {
         //método que regresa a usuario con nombre de usuario inidicado
-        Usuario user = new Usuario();
+        Persona user = new Persona();
         conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"+usuario+"';");
+        ResultSet result = state.executeQuery("SELECT * FROM persona WHERE rut='"+rut+"';");
         while(result.next())
         {
             user.setRut((String)result.getObject(1));
             user.setNombre((String)result.getObject(2));
             user.setApellidoPaterno((String)result.getObject(3));
             user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
+            user.setCargo((String)result.getObject(5));
+            user.setEstado((int)result.getObject(6));
         }
         connect.close();
         return user;
@@ -231,4 +226,18 @@ public class PersonaDAO {
         connect.close();
         return estado;         
     }  
+    
+        
+    public static int getNumeroTrabajos(String rut) throws SQLException
+    {
+        int numeroCargas = 0;
+        conectar();    
+        ResultSet result = state.executeQuery("SELECT * FROM carga WHERE rutEmpleado='"+rut+"';");
+        while(result.next())
+        {
+            numeroCargas++;
+        }
+        connect.close();
+        return numeroCargas;
+    }
 }

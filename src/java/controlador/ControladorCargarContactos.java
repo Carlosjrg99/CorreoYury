@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
-import dao.CargaDAO;
-import dao.UsuarioDAO;
+import dao.ContactoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,12 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 
-/**
- *
- * @author Carlo
- */
-@WebServlet(name = "ControladorModificarUsuario", urlPatterns = {"/ControladorModificarUsuario"})
-public class ControladorModificarUsuario extends HttpServlet {
+@WebServlet(name = "ControladorCargarContactos", urlPatterns = {"/ControladorCargarContactos"})
+public class ControladorCargarContactos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,48 +31,35 @@ public class ControladorModificarUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-        
-        String password="";
-        int numeroCargas=0;
-        int contactoEmergencia=0;
-        String opcion=request.getParameter("opcion");
-        if(opcion.equals("Modificar"))
+            String opcion=request.getParameter("opcion");
+        if(opcion.equals("Cargar"))
         {
-            //Permite modificar algunos de sus datos en la BD a los trabajadores
+            //Para agregar cargas en la BD un usuario existente
+            //Posterior a Grabar en el caso de indicar cargas
+            String numeroTelefonico;
+            String nombreContacto;
+            String apellidoP;
+            String apellidoM;
             HttpSession sesion = request.getSession(true);
-            Usuario user = (Usuario) sesion.getAttribute("usuario");
-            contactoEmergencia = Integer.valueOf(request.getParameter("contactos"));
-            password = request.getParameter("pass");
-            numeroCargas = Integer.valueOf(request.getParameter("cargas"));
-            UsuarioDAO.modificar(user, password);
-            sesion.setAttribute("usuarioMod", UsuarioDAO.buscar(user.getUsername()));
-            sesion.setAttribute("numeroCargasMod", numeroCargas);
-            sesion.setAttribute("numeroContactosMod", contactoEmergencia);
-            if(numeroCargas != 0 && contactoEmergencia == 0)
+            Usuario contacto = (Usuario) sesion.getAttribute("usuarioMod");
+            int numContactos = (int) sesion.getAttribute("numeroContactosMod");
+            for(int i = 1;i <= numContactos;i++) 
             {
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado());
+                numeroTelefonico=request.getParameter("numeroTelefonico"+i);
+                nombreContacto=request.getParameter("nombre"+i);
+                apellidoP=request.getParameter("apellidoPaterno"+i);
+                apellidoM=request.getParameter("apellidoMaterno"+i);
+                ContactoDAO.agregarContacto(contacto.getRutEmpleado(), numeroTelefonico, nombreContacto, apellidoP, apellidoM);
             }
-            else if(numeroCargas == 0 && contactoEmergencia != 0)
-            {
-                response.sendRedirect("AgregarContacto.jsp?rut="+user.getRutEmpleado());
-            }
-            else if(numeroCargas != 0 && contactoEmergencia != 0)
-            {
-                sesion.setAttribute("contactar", "contactar");
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado());
-            }
-            else
-            {
-                response.sendRedirect("MensajeOk.jsp?mensaje=Datos modificados, &username="+user.getUsername());
-            }
+                response.sendRedirect("MensajeOk.jsp?mensaje=Datos agregados<br>Para: &username="+contacto.getUsername());
         }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorModificarUsuario</title>");            
+            out.println("<title>Servlet ControladorCargarContactos</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorModificarUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorCargarContactos at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -103,7 +80,7 @@ public class ControladorModificarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,7 +98,7 @@ public class ControladorModificarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
