@@ -27,15 +27,11 @@
         <h3> <%=mensaje+"<br><br>"+username%></h3>
 
         <br><br><br>
-        <button onclick="goBack()">Volver</button>
-        <script>
-        function goBack() 
-        {
-            window.history.back();
-        }
-        </script>
-        <br>
+        <form action="CerrarSesion.jsp">
+            <input type="submit" value="Salir">
+        </form>
         <%
+            out.println("<br>");
             switch(user.getTipoUsuario())
             {
                 case 1:

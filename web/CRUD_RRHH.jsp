@@ -66,10 +66,10 @@
                     </select><br><br>
                     <label for="numeroCargas">Número de Cargas</label>
                     <input type="number" name="numeroCargas" required="" min="0" value="0"><br><br>
-                    <label for="contactoEmergencia">Contacto de Emergencia</label>
-                    <input type="text" name="contactoEmergencia" required=""><br><br>
-                    <label for="ultimoTrabajo">Trabajo Anterior</label>
-                    <input type="text" name="ultimoTrabajo" class="validate" required=""><br><br><br>
+                    <label for="contactoEmergencia">Número de Contacto</label>
+                    <input type="number" name="contactoEmergencia" required="" min="0" value="0"><br><br>
+                    <label for="anteriorTrabajo">Número de Trabajos Previos</label>
+                    <input type="number" name="anteriorTrabajo" required="" min="0" value="0"><br><br><br>
                     <button type="submit" name="opcion" value="Grabar">Crear</button>
                     <button type="reset">Cancelar</button>
                     <input type="submit" value="Regresar" onclick="window.location='menuRRHH.jsp';"/>

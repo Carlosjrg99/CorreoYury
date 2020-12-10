@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.PersonaDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Persona;
 import modelo.Usuario;
 
 public class ControladorGrabarUsuario extends HttpServlet 
@@ -30,8 +32,8 @@ public class ControladorGrabarUsuario extends HttpServlet
         String password="";
         int estado=0;
         int numeroCargas=0;
-        String contactoEmergencia="";
-        String ultimoTrabajo="";
+        int contactoEmergencia=0;
+        int anteriorTrabajo=0;
         String opcion=request.getParameter("opcion");
             //Recibe el valor de opcion de algún botón para realizar acciones
         if (opcion.equals("Grabar")) 
@@ -75,30 +77,35 @@ public class ControladorGrabarUsuario extends HttpServlet
                     break;
             }
             numeroCargas=Integer.valueOf(request.getParameter("numeroCargas"));
-            contactoEmergencia=request.getParameter("contactoEmergencia");
-            ultimoTrabajo=request.getParameter("ultimoTrabajo");
+            contactoEmergencia=Integer.valueOf(request.getParameter("contactoEmergencia"));
+            anteriorTrabajo=Integer.valueOf(request.getParameter("anteriorTrabajo"));
             username = UsuarioDAO.revisionUsuario(nombre, apellidoPaterno);
-                
-            Usuario usuario=new Usuario(rut, nombre, apellidoPaterno, apellidoMaterno, tipoUsuario, cargo, username, password, estado, numeroCargas, contactoEmergencia, ultimoTrabajo);
+            Persona persona = new Persona(rut, nombre, apellidoPaterno, apellidoMaterno, cargo, estado);
+            PersonaDAO.agregar(persona);
+            Usuario usuario=new Usuario(username, rut, tipoUsuario, password);
+            UsuarioDAO.agregar(usuario);
             HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuarioMod", null);
-            if(UsuarioDAO.agregar(usuario) == true)
+            sesion.setAttribute("usuarioMod", usuario);
+            sesion.setAttribute("numeroCargasMod", numeroCargas);
+            sesion.setAttribute("numeroContactosMod", contactoEmergencia);
+            sesion.setAttribute("numeroTrabajosMod", anteriorTrabajo);
+            sesion.setAttribute("", cargo);
+            
+            if(numeroCargas != 0)
             {
-            //bien
-                sesion.setAttribute("usuarioMod", usuario);
-                sesion.setAttribute("numeroCargasMod", numeroCargas);
-                if(numeroCargas == 0)
-                {
-                    response.sendRedirect("MensajeOk.jsp?mensaje=Usuario agregado<br>Su username es: &username="+username);
-                }
-                else
-                {
-                    response.sendRedirect("AgregarCarga.jsp?rut="+rut+"&numeroCargas="+numeroCargas);
-                }
+                response.sendRedirect("AgregarCarga.jsp?rut="+rut);
+            }
+            else if(contactoEmergencia != 0)
+            {
+                response.sendRedirect("AgregarContacto.jsp?rut="+rut);
+            }
+            else if(anteriorTrabajo != 0)
+            {
+                response.sendRedirect("AgregarTrabajo.jsp?rut="+rut);
             }
             else
             {
-                response.sendRedirect("MensajeError.jsp?mensaje=Rut ya existente&retorno=");
+                response.sendRedirect("MensajeOk.jsp?mensaje=Usuario agregado<br>Su username es: &username="+username);
             }
         } 
         

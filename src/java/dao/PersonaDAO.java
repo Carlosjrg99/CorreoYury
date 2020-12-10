@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.sql.Connection;
@@ -10,14 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import modelo.Persona;
-import modelo.Usuario;
 
-/**
- *
- * @author Carlo
- */
 public class PersonaDAO {
         
     private static Connection connect;
@@ -43,88 +32,14 @@ public class PersonaDAO {
     {
         //método que recupera estado
          return sw;
-    }
+    }    
     
-    public static Usuario login(String usuario,String pass) throws SQLException
-    {
-        //método que se encarga de validar el usuario y la contraseña
-        Usuario user = new Usuario();
-        conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE username='"
-                           +usuario+"' AND password='"+pass+"';");
-        while(result.next())
-        {
-            user.setRut((String)result.getObject(1));/*
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));*/
-            user.setTipoUsuario((int)result.getObject(2));
-            //user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(3));
-            user.setPassword((String)result.getObject(4));
-            /*user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));*/
-        }
-        connect.close();
-        return user;
-     }
-    
-    public static ArrayList<Usuario> getArreglo(ResultSet result) throws SQLException
-    {
-        //Se encarga de recuperar en un ArrayList objetos a partir del ResultSet
-        ArrayList<Usuario> arreglo = new ArrayList();
-        while(result.next())
-        {
-            Usuario user = new Usuario();
-            user.setRut((String)result.getObject(1));
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
-            arreglo.add(user);
-        }
-        return arreglo;
-    }
-    
-    public static String revisionUsuario(String nombre, String apellido) throws SQLException
-    {
-        //método que se encarga de crear un usuario único a partir del nombre y apellido
-        ArrayList<Usuario> alUsuarios = new ArrayList();
-        String username="";
-        String usernamecito;
-        int i=0;
-        conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM usuario");
-        alUsuarios = getArreglo(result);
-        username = nombre.charAt(0)+apellido;
-        username = username.toLowerCase();
-        for(Usuario usuarito : alUsuarios)
-        {
-            usernamecito = username+i;
-            if(usuarito.getUsername().equals(usernamecito))
-                {
-                    i++;
-                }
-        }
-        username = username+i;
-        return username;
-    }
-    
-     public static boolean revisarRut(String rut) throws SQLException
+    public static boolean revisarRut(String rut) throws SQLException
     {
         //método que se encarga de revisar si existe un usuario con el rut inidicado
-        Usuario user = new Usuario();
+        Persona user = new Persona();
         conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE rut='"
+        ResultSet result = state.executeQuery("SELECT * FROM persona WHERE rut='"
                            +rut+"';");
         while(result.next())
         {
@@ -132,17 +47,11 @@ public class PersonaDAO {
             user.setNombre((String)result.getObject(2));
             user.setApellidoPaterno((String)result.getObject(3));
             user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
+            user.setCargo((String)result.getObject(5));
+            user.setEstado((int)result.getObject(6));
             if(user.getRut().equals(rut))
             {
-                //el rut ya ha sido registrado con otro usuario
+                //el rut ya ha sido registrado previamente
                 connect.close();
                 return false;
             }
@@ -151,19 +60,21 @@ public class PersonaDAO {
         return true;
      }
     
-    public static boolean  agregar(Usuario usuario) throws SQLException
+    public static boolean  agregar(Persona persona) throws SQLException
     {
         //método que agrega un usuario a la BD
         boolean estado=false;
-        if(!revisarRut(usuario.getRut()))
+        if(!revisarRut(persona.getRut()))
         {
             return estado;
         }
         conectar();
-        state.executeUpdate("INSERT INTO usuario VALUES('"+usuario.getRut()+
-                "',"+usuario.getTipoUsuario()+
-                ",'"+usuario.getUsername()+
-                "','"+usuario.getPassword()+"');");
+        state.executeUpdate("INSERT INTO persona VALUES('"+persona.getRut()+
+                "','"+persona.getNombre()+
+                "','"+persona.getApellidoPaterno()+
+                "','"+persona.getApellidoMaterno()+
+                "','"+persona.getCargo()+
+                "',"+persona.getEstado()+");");
         connect.close();
         estado = true;
         return estado;
@@ -186,58 +97,5 @@ public class PersonaDAO {
         }
         connect.close();
         return user;
-    }
-    
-    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
-    {
-        //método que agrega carga a un usuario existente
-        conectar();
-        state.executeUpdate("INSERT INTO carga VALUES('"+rut+
-                "','"+nombre+
-                "','"+apellidoPaterno+
-                "','"+apellidoMaterno+"');");
-        connect.close();
-    }
-    
-    public static boolean  modificar(Usuario usuario, String contacto, String password, int cargas) throws SQLException
-    {
-        //método que permite modificar los datos en la BD de un trabajador
-        boolean estado=false;
-        int numCargas = cargas + usuario.getNumeroCargas();
-        conectar();
-        if(!contacto.isEmpty())
-        {
-            state.executeUpdate("UPDATE usuario SET contactoEmergencia='"
-                    +contacto+"' WHERE rut='"+usuario.getRut()+"';");
-            estado = true;
-        }
-        if(!password.isEmpty())
-        {
-            state.executeUpdate("UPDATE usuario SET password='"
-                    +password+"' WHERE rut='"+usuario.getRut()+"';");
-            estado = true;
-        }
-        if(cargas > 0)
-        {
-            state.executeUpdate("UPDATE usuario SET numeroCargas='"
-                    +numCargas+"' WHERE rut='"+usuario.getRut()+"';");
-            estado = true;
-        }
-        connect.close();
-        return estado;         
-    }  
-    
-        
-    public static int getNumeroTrabajos(String rut) throws SQLException
-    {
-        int numeroCargas = 0;
-        conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM carga WHERE rutEmpleado='"+rut+"';");
-        while(result.next())
-        {
-            numeroCargas++;
-        }
-        connect.close();
-        return numeroCargas;
-    }
+    }    
 }

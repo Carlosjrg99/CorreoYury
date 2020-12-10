@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 06, 2020 at 07:48 AM
+-- Generation Time: Dec 10, 2020 at 03:30 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `carga` (
-  `rutApoderado` varchar(20) COLLATE utf8_bin NOT NULL,
+  `id_carga` int(11) NOT NULL,
+  `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
   `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL
@@ -39,12 +40,84 @@ CREATE TABLE `carga` (
 -- Dumping data for table `carga`
 --
 
-INSERT INTO `carga` (`rutApoderado`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
-('2222222-2', 'Felipe', 'Ramirez', 'Romero'),
-('2222222-2', 'Marian', 'Ramirez', 'Romero'),
-('2222222-2', 'Sebastian', 'Ramirez', 'Romero'),
-('33333333-3', 'Mariana', 'Jimenez', 'Romero'),
-('33333333-3', 'Mariano', 'Jimenez', 'Romero');
+INSERT INTO `carga` (`id_carga`, `rutEmpleado`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
+(1, '2222222-2', 'Felipe', 'Marambio', 'Rodriguez'),
+(2, '2222222-2', 'Marian', 'Marambio', 'Rodriguez'),
+(3, '2222222-2', 'Sebastian', 'Marambio', 'Rodriguez'),
+(4, '33333333-3', 'Alberto', 'Rosales', 'Ramirez');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacto`
+--
+
+CREATE TABLE `contacto` (
+  `id_contacto` int(11) NOT NULL,
+  `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
+  `numeroTelefonico` varchar(20) COLLATE utf8_bin NOT NULL,
+  `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
+  `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
+  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `contacto`
+--
+
+INSERT INTO `contacto` (`id_contacto`, `rutEmpleado`, `numeroTelefonico`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
+(1, '2222222-2', '905151519', 'Marian', 'Rodriguez', 'Romero'),
+(2, '2222222-2', '912121213', 'Franchesca', 'Vasquez', 'Ramirez'),
+(3, '33333333-3', '907151512', 'Mariana', 'Ramirez', 'Ron'),
+(4, '33333333-3', '912121212', 'Mariano', 'Ramirez', 'Ron');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `persona`
+--
+
+CREATE TABLE `persona` (
+  `rut` varchar(20) COLLATE utf8_bin NOT NULL,
+  `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
+  `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
+  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL,
+  `cargo` varchar(20) COLLATE utf8_bin NOT NULL,
+  `estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `persona`
+--
+
+INSERT INTO `persona` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `cargo`, `estado`) VALUES
+('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 'Recursos Humanos', 0),
+('2222222-2', 'Carlos', 'Marambio', 'Perez', 'Cargo Tipo 1', 0),
+('33333333-3', 'Carlos', 'Rosales', 'Dominguez', 'Cargo tipo 2', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trabajo`
+--
+
+CREATE TABLE `trabajo` (
+  `id_trabajo` int(11) NOT NULL,
+  `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
+  `cargo` varchar(20) COLLATE utf8_bin NOT NULL,
+  `empresa` varchar(20) COLLATE utf8_bin NOT NULL,
+  `fechaInicio` varchar(20) COLLATE utf8_bin NOT NULL,
+  `fechaFin` varchar(20) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `trabajo`
+--
+
+INSERT INTO `trabajo` (`id_trabajo`, `rutEmpleado`, `cargo`, `empresa`, `fechaInicio`, `fechaFin`) VALUES
+(1, '33333333-3', 'Fisico Culturista', 'Pacific Gym', '2020-09-01', '2020-10-01'),
+(2, '33333333-3', 'Astronauta', 'NASA', '2020-10-02', '2020-11-02'),
+(3, '33333333-3', 'Profesor', 'INACAP', '2020-11-03', '2020-12-08');
 
 -- --------------------------------------------------------
 
@@ -53,28 +126,108 @@ INSERT INTO `carga` (`rutApoderado`, `nombre`, `apellidoPaterno`, `apellidoMater
 --
 
 CREATE TABLE `usuario` (
-  `rut` varchar(15) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `nombre` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `apellidoPaterno` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `apellidoMaterno` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `tipoUsuario` int(11) NOT NULL,
-  `cargo` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `username` varchar(15) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `password` varchar(30) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `estado` int(11) NOT NULL,
-  `numeroCargas` int(11) NOT NULL,
-  `contactoEmergencia` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `ultimoTrabajo` varchar(20) COLLATE utf8_general_mysql500_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `username` varchar(20) COLLATE utf8_bin NOT NULL,
+  `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
+  `password` varchar(20) COLLATE utf8_bin NOT NULL,
+  `tipoUsuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `tipoUsuario`, `cargo`, `username`, `password`, `estado`, `numeroCargas`, `contactoEmergencia`, `ultimoTrabajo`) VALUES
-('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 1, 'Recursos Humanos', 'rvasquez0', '123456', 0, 0, '99999199', 'Administrador'),
-('2222222-2', 'Valentina', 'Romero', 'Ramirez', 1, 'Recursos Humanos', 'vromero0', '123456', 0, 3, '999999991', 'Astronauta'),
-('33333333-3', 'Carlos', 'Marambio', 'Perez', 2, 'Cargo tipo 1', 'cmarambio0', '123456', 0, 2, '99999999', 'Fisico Culturista');
+INSERT INTO `usuario` (`username`, `rutEmpleado`, `password`, `tipoUsuario`) VALUES
+('cmarambio0', '2222222-2', '123456', 2),
+('crosales0', '33333333-3', '123456', 2),
+('rvasquez0', '1111111-1', '123456', 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `carga`
+--
+ALTER TABLE `carga`
+  ADD PRIMARY KEY (`id_carga`),
+  ADD KEY `rutEmpleado` (`rutEmpleado`);
+
+--
+-- Indexes for table `contacto`
+--
+ALTER TABLE `contacto`
+  ADD PRIMARY KEY (`id_contacto`),
+  ADD KEY `rutEmpleado` (`rutEmpleado`);
+
+--
+-- Indexes for table `persona`
+--
+ALTER TABLE `persona`
+  ADD PRIMARY KEY (`rut`);
+
+--
+-- Indexes for table `trabajo`
+--
+ALTER TABLE `trabajo`
+  ADD PRIMARY KEY (`id_trabajo`),
+  ADD KEY `rutEmpleado` (`rutEmpleado`);
+
+--
+-- Indexes for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `rutEmpleado` (`rutEmpleado`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `carga`
+--
+ALTER TABLE `carga`
+  MODIFY `id_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `contacto`
+--
+ALTER TABLE `contacto`
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `trabajo`
+--
+ALTER TABLE `trabajo`
+  MODIFY `id_trabajo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `carga`
+--
+ALTER TABLE `carga`
+  ADD CONSTRAINT `carga_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
+
+--
+-- Constraints for table `contacto`
+--
+ALTER TABLE `contacto`
+  ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
+
+--
+-- Constraints for table `trabajo`
+--
+ALTER TABLE `trabajo`
+  ADD CONSTRAINT `trabajo_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
+
+--
+-- Constraints for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

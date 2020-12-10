@@ -1,21 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controlador;
 
-import dao.ContactoDAO;
+import dao.TrabajoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Trabajo;
 import modelo.Usuario;
 
-@WebServlet(name = "ControladorCargarContactos", urlPatterns = {"/ControladorCargarContactos"})
-public class ControladorCargarContactos extends HttpServlet {
+/**
+ *
+ * @author Carlo
+ */
+public class ControladorRegistrarTrabajos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,37 +44,31 @@ public class ControladorCargarContactos extends HttpServlet {
             {
                 //Para agregar cargas en la BD un usuario existente
                 //Posterior a Grabar en el caso de indicar cargas
-                String numeroTelefonico;
-                String nombreContacto;
-                String apellidoP;
-                String apellidoM;
+                String cargo;
+                String empresa;
+                String fechaInico;
+                String fechaFin;
                 HttpSession sesion = request.getSession(true);
-                Usuario contacto = (Usuario) sesion.getAttribute("usuarioMod");
-                int numContactos = (int) sesion.getAttribute("numeroContactosMod");
-                for(int i = 1;i <= numContactos;i++) 
+                Usuario usuario = (Usuario) sesion.getAttribute("usuarioMod");
+                int numTrabajos = (int) sesion.getAttribute("numeroTrabajosMod");
+                for(int i = 1;i <= numTrabajos;i++) 
                 {
-                    numeroTelefonico=request.getParameter("numeroTelefonico"+i);
-                    nombreContacto=request.getParameter("nombre"+i);
-                    apellidoP=request.getParameter("apellidoPaterno"+i);
-                    apellidoM=request.getParameter("apellidoMaterno"+i);
-                    ContactoDAO.agregarContacto(contacto.getRutEmpleado(), numeroTelefonico, nombreContacto, apellidoP, apellidoM);
+                    cargo=request.getParameter("cargo"+i);
+                    empresa=request.getParameter("empresa"+i);
+                    fechaInico=request.getParameter("fechaInicio"+i);
+                    fechaFin=request.getParameter("fechaFin"+i);
+                    Trabajo trabajo = new Trabajo(0,usuario.getRutEmpleado(),cargo,empresa,fechaInico,fechaFin);
+                    TrabajoDAO.agregar(trabajo);
                 }
-                if((Integer) sesion.getAttribute("numeroTrabajosMod") > 0)
-                {
-                    response.sendRedirect("AgregarTrabajo.jsp?rut="+contacto.getRutEmpleado());
-                }
-                else
-                {
-                    response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+contacto.getUsername());
-                }
+                response.sendRedirect("MensajeOk.jsp?mensaje=Datos agregados<br>Para: &username="+usuario.getUsername());
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorCargarContactos</title>");            
+            out.println("<title>Servlet ControladorRegistrarTrabajos</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorCargarContactos at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorRegistrarTrabajos at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -87,7 +89,7 @@ public class ControladorCargarContactos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorRegistrarTrabajos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -105,7 +107,7 @@ public class ControladorCargarContactos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorRegistrarTrabajos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

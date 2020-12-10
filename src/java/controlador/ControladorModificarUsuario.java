@@ -58,6 +58,7 @@ public class ControladorModificarUsuario extends HttpServlet {
             sesion.setAttribute("usuarioMod", UsuarioDAO.buscar(user.getUsername()));
             sesion.setAttribute("numeroCargasMod", numeroCargas);
             sesion.setAttribute("numeroContactosMod", contactoEmergencia);
+            sesion.setAttribute("numeroTrabajosMod", 0);
             if(numeroCargas != 0 && contactoEmergencia == 0)
             {
                 response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado());

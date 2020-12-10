@@ -60,18 +60,10 @@ public class UsuarioDAO
         while(result.next())
         {
             Usuario user = new Usuario();
-            user.setRut((String)result.getObject(1));
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
+            user.setUsername((String)result.getObject(1));
+            user.setRutEmpleado((String)result.getObject(2));
+            user.setPassword((String)result.getObject(3));
+            user.setTipoUsuario((int)result.getObject(4));
             arreglo.add(user);
         }
         return arreglo;
@@ -101,54 +93,16 @@ public class UsuarioDAO
         return username;
     }
     
-     public static boolean revisarRut(String rut) throws SQLException
-    {
-        //método que se encarga de revisar si existe un usuario con el rut inidicado
-        Usuario user = new Usuario();
-        conectar();    
-        ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE rut='"
-                           +rut+"';");
-        while(result.next())
-        {
-            user.setRut((String)result.getObject(1));
-            user.setNombre((String)result.getObject(2));
-            user.setApellidoPaterno((String)result.getObject(3));
-            user.setApellidoMaterno((String)result.getObject(4));
-            user.setTipoUsuario((int)result.getObject(5));
-            user.setCargo((String)result.getObject(6));
-            user.setUsername((String)result.getObject(7));
-            user.setPassword((String)result.getObject(8));
-            user.setEstado((int)result.getObject(9));
-            user.setNumeroCargas((int)result.getObject(10));
-            user.setContactoEmergencia((String)result.getObject(11));
-            user.setUltimoTrabajo((String)result.getObject(12));
-            if(user.getRut().equals(rut))
-            {
-                //el rut ya ha sido registrado con otro usuario
-                connect.close();
-                return false;
-            }
-        }
-        connect.close();
-        return true;
-     }
-    
     public static boolean  agregar(Usuario usuario) throws SQLException
     {
         //método que agrega un usuario a la BD
-        boolean estado=false;
-        if(!revisarRut(usuario.getRut()))
-        {
-            return estado;
-        }
         conectar();
-        state.executeUpdate("INSERT INTO usuario VALUES('"+usuario.getRut()+
-                "',"+usuario.getTipoUsuario()+
-                ",'"+usuario.getUsername()+
-                "','"+usuario.getPassword()+"');");
+        state.executeUpdate("INSERT INTO usuario VALUES('"+usuario.getUsername()+
+                "','"+usuario.getRutEmpleado()+
+                "','"+usuario.getPassword()+
+                "',"+usuario.getTipoUsuario()+");");
         connect.close();
-        estado = true;
-        return estado;
+        return true;
     }
     
     public static Usuario buscar(String usuario) throws SQLException
@@ -174,27 +128,13 @@ public class UsuarioDAO
     {
         //método que permite modificar los datos en la BD de un trabajador
         boolean estado=false;
-        /*int numCargas = cargas + CargaDAO.getNumeroCargas(usuario.getRutEmpleado());
-        int numContactos = contactos + ContactoDAO.getNumeroContactos(usuario.getRutEmpleado());*/
-        conectar();/*
-        if(contacto > 0)
-        {
-            state.executeUpdate("UPDATE usuario SET contactoEmergencia='"
-                    +contacto+"' WHERE rut='"+usuario.getRut()+"';");
-            estado = true;
-        }*/
+        conectar();
         if(!password.isEmpty())
         {
             state.executeUpdate("UPDATE usuario SET password='"
                     +password+"' WHERE username='"+usuario.getUsername()+"';");
             estado = true;
         }
-        /*if(cargas > 0)
-        {
-            state.executeUpdate("UPDATE usuario SET numeroCargas='"
-                    +numCargas+"' WHERE rut='"+usuario.getRut()+"';");
-            estado = true;
-        }*/
         connect.close();
         return estado;         
     }  

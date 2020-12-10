@@ -57,14 +57,17 @@ public class ControladorCargarCargas extends HttpServlet {
                 apellidoM=request.getParameter("apellidoMaterno"+i);
                 CargaDAO.agregarCarga(carga.getRutEmpleado(), nombreCarga, apellidoP, apellidoM);
             }
-            if((String) sesion.getAttribute("contactar") == null)
+            if((Integer) sesion.getAttribute("numeroContactosMod") > 0)
             {
-                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
+                response.sendRedirect("AgregarContacto.jsp?rut="+carga.getRutEmpleado());
+            }
+            else if((Integer) sesion.getAttribute("numeroTrabajosMod") > 0)
+            {
+                response.sendRedirect("AgregarTrabajo.jsp?rut="+carga.getRutEmpleado());
             }
             else
             {
-                sesion.setAttribute("contactar", null);
-                response.sendRedirect("AgregarContacto.jsp?rut="+carga.getRutEmpleado());
+                response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+carga.getUsername());
             }
                 
         }

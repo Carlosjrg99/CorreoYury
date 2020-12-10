@@ -12,6 +12,10 @@
         <servlet-name>ControladorCargarCargas</servlet-name>
         <servlet-class>controlador.ControladorCargarCargas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorRegistrarTrabajos</servlet-name>
+        <servlet-class>controlador.ControladorRegistrarTrabajos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorLogin</servlet-name>
         <url-pattern>/ControladorLogin</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ControladorCargarCargas</servlet-name>
         <url-pattern>/ControladorCargarCargas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorRegistrarTrabajos</servlet-name>
+        <url-pattern>/ControladorRegistrarTrabajos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
