@@ -57,5 +57,15 @@ public class ContactoDAO {
         }
         connect.close();
         return numeroContactos;
+    }  
+    
+    public static boolean  eliminar(String rut) throws SQLException
+    {
+        boolean estado=false;
+        conectar();
+        state.executeUpdate("DELETE FROM contacto WHERE rutEmpleado='"+rut+"';");
+        connect.close();
+        estado = true;
+        return estado;         
     }
 }

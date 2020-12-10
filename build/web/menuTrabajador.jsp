@@ -36,12 +36,14 @@
                 }
          %>
         <h1>MENÚ TRABAJADOR!</h1>
-        <%if(user.getTipoUsuario()==1)
-        {
-            out.println("<li><a href='menuRRHH.jsp'>Acceder como RRHH</a></li>");
-        }%>
-        <li><a href="Modificar.jsp">Editar Información</a></li>
-        <li><a href="Datos_Trabajador.jsp">Ver Información</a></li>
-        <li><a href="CerrarSesion.jsp">Salir</a></li>
+        <ul>
+            <%if(user.getTipoUsuario()==1)
+            {
+                out.println("<li><a href='menuRRHH.jsp'>Acceder como RRHH</a></li>");
+            }%>
+            <li><a href="Modificar.jsp">Editar Información</a></li>
+            <li><a href="Datos_Trabajador.jsp">Ver Información</a></li>
+            <li><a href="CerrarSesion.jsp">Salir</a></li>
+        </ul>
     </body>
 </html>

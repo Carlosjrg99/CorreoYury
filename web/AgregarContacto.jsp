@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registrar cargas</title>
+        <title>Registrar Contactos</title>
         <style>
             table, th, td 
             {
@@ -48,7 +48,7 @@
               numeroCargas= (Integer) sesion.getAttribute("numeroContactosMod");
               rut=request.getParameter("rut");
          %>
-        <h1>Ingresar Datos!</h1>
+        <h1>Ingresar Contactos</h1>
         <form action="ControladorCargarContactos" method="POST" >
             <%
                 for (int i = 1;i <= numeroCargas;i++) 

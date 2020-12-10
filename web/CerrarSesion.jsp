@@ -21,6 +21,6 @@
         <br><br><br>
         <center><h1>Fin de la sesión</h1></center>
         <br><br><br>
-        <center><a href='index.jsp'>Volver</a></center>
+        <center><a href='index.jsp'>Inicio</a></center>
     </body>
 </html>

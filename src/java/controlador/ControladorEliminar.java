@@ -5,6 +5,10 @@
  */
 package controlador;
 
+import dao.CargaDAO;
+import dao.ContactoDAO;
+import dao.PersonaDAO;
+import dao.TrabajoDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,19 +16,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Usuario;
 
 /**
  *
  * @author Carlo
  */
-@WebServlet(name = "ControladorModificarUsuario", urlPatterns = {"/ControladorModificarUsuario"})
-public class ControladorModificarUsuario extends HttpServlet {
+public class ControladorEliminar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,57 +40,25 @@ public class ControladorModificarUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-        
-        String password="";
-        int numeroCargas=0;
-        int contactoEmergencia=0;
-        String opcion=request.getParameter("opcion");
-        if(opcion.equals("Modificar"))
-        {
-            //Permite modificar algunos de sus datos en la BD a los trabajadores
-            HttpSession sesion = request.getSession(true);
-            Usuario user = new Usuario();
-            if(request.getParameter("rut") == null)
+            String opcion = request.getParameter("opcion");
+            if(opcion.equals("Aceptar"))
             {
-                user = (Usuario) sesion.getAttribute("usuario");
+                String rut = request.getParameter("rut");
+                String nombre = request.getParameter("nombre");
+                CargaDAO.eliminar(rut);
+                ContactoDAO.eliminar(rut);
+                TrabajoDAO.eliminar(rut);
+                UsuarioDAO.eliminar(rut);
+                PersonaDAO.eliminar(rut);
+                response.sendRedirect("MensajeOk.jsp?mensaje=Empleado Eliminado<br>Rut: &username="+rut);
             }
-            else
-            {
-                user = UsuarioDAO.buscarRut(request.getParameter("rut"));
-            }
-            contactoEmergencia = Integer.valueOf(request.getParameter("contactos"));
-            password = request.getParameter("pass");
-            numeroCargas = Integer.valueOf(request.getParameter("cargas"));
-            UsuarioDAO.modificar(user, password);
-            sesion.setAttribute("usuarioMod", UsuarioDAO.buscar(user.getUsername()));
-            sesion.setAttribute("numeroCargasMod", numeroCargas);
-            sesion.setAttribute("numeroContactosMod", contactoEmergencia);
-            sesion.setAttribute("numeroTrabajosMod", 0);
-            if(numeroCargas != 0 && contactoEmergencia == 0)
-            {
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado());
-            }
-            else if(numeroCargas == 0 && contactoEmergencia != 0)
-            {
-                response.sendRedirect("AgregarContacto.jsp?rut="+user.getRutEmpleado());
-            }
-            else if(numeroCargas != 0 && contactoEmergencia != 0)
-            {
-                sesion.setAttribute("contactar", "contactar");
-                response.sendRedirect("AgregarCarga.jsp?rut="+user.getRutEmpleado());
-            }
-            else
-            {
-                response.sendRedirect("MensajeOk.jsp?mensaje=Datos modificados, &username="+user.getUsername());
-            }
-        }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorModificarUsuario</title>");            
+            out.println("<title>Servlet ControladorEliminar</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorModificarUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorEliminar at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -111,7 +79,7 @@ public class ControladorModificarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorEliminar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -129,7 +97,7 @@ public class ControladorModificarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorEliminar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import modelo.Persona;
 
 public class PersonaDAO {
@@ -36,7 +37,7 @@ public class PersonaDAO {
     
     public static boolean revisarRut(String rut) throws SQLException
     {
-        //método que se encarga de revisar si existe un usuario con el rut inidicado
+        //método que se encarga de revisar si existe un Persona con el rut inidicado
         Persona user = new Persona();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM persona WHERE rut='"
@@ -62,7 +63,7 @@ public class PersonaDAO {
     
     public static boolean  agregar(Persona persona) throws SQLException
     {
-        //método que agrega un usuario a la BD
+        //método que agrega un Persona a la BD
         boolean estado=false;
         if(!revisarRut(persona.getRut()))
         {
@@ -82,7 +83,7 @@ public class PersonaDAO {
     
     public static Persona buscar(String rut) throws SQLException
     {
-        //método que regresa a usuario con nombre de usuario inidicado
+        //método que regresa a Persona con nombre de Persona inidicado
         Persona user = new Persona();
         conectar();    
         ResultSet result = state.executeQuery("SELECT * FROM persona WHERE rut='"+rut+"';");
@@ -98,4 +99,35 @@ public class PersonaDAO {
         connect.close();
         return user;
     }    
+    
+    public static ArrayList<Persona> getArreglo() throws SQLException
+    {
+        //Se encarga de recuperar en un ArrayList objetos a partir del ResultSet
+        conectar();
+        ResultSet result = state.executeQuery("SELECT * FROM persona");
+        ArrayList<Persona> arreglo = new ArrayList();
+        while(result.next())
+        {
+            Persona user = new Persona();
+            user.setRut((String)result.getObject(1));
+            user.setNombre((String)result.getObject(2));
+            user.setApellidoPaterno((String)result.getObject(3));
+            user.setApellidoMaterno((String)result.getObject(4));
+            user.setCargo((String)result.getObject(5));
+            user.setEstado((int)result.getObject(6));
+            arreglo.add(user);
+        }
+        connect.close();
+        return arreglo;
+    }  
+    
+    public static boolean  eliminar(String rut) throws SQLException
+    {
+        boolean estado=false;
+        conectar();
+        state.executeUpdate("UPDATE persona SET estado = 3 WHERE rut='"+rut+"';");
+        connect.close();
+        estado = true;
+        return estado;         
+    }
 }

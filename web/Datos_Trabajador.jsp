@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Sus Datos</title>
         <style>
             table, th, td 
             {
@@ -46,7 +46,7 @@
                     }
                 }
          %>
-        <h1>Datos!</h1>
+        <h1>Sus Datos</h1>
         <table>
               <thead>
                 <tr>

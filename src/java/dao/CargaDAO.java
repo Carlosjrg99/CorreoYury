@@ -67,5 +67,15 @@ public class CargaDAO {
         }
         connect.close();
         return numeroCargas;
+    }  
+    
+    public static boolean  eliminar(String rut) throws SQLException
+    {
+        boolean estado=false;
+        conectar();
+        state.executeUpdate("DELETE FROM carga WHERE rutEmpleado='"+rut+"';");
+        connect.close();
+        estado = true;
+        return estado;         
     }
 }

@@ -122,7 +122,22 @@ public class UsuarioDAO
         return user;
     }
     
-    
+    public static Usuario buscarRut(String rut) throws SQLException
+    {
+        //método que regresa a usuario con nombre de usuario inidicado
+        Usuario user = new Usuario();
+        conectar();    
+        ResultSet result = state.executeQuery("SELECT * FROM usuario WHERE rutEmpleado='"+rut+"';");
+        while(result.next())
+        {
+            user.setUsername((String)result.getObject(1));
+            user.setRutEmpleado((String)result.getObject(2));
+            user.setPassword((String)result.getObject(3));
+            user.setTipoUsuario((int)result.getObject(4));
+        }
+        connect.close();
+        return user;
+    }
     
     public static boolean  modificar(Usuario usuario, String password) throws SQLException
     {
@@ -138,4 +153,14 @@ public class UsuarioDAO
         connect.close();
         return estado;         
     }  
+    
+    public static boolean  eliminar(String rut) throws SQLException
+    {
+        boolean estado=false;
+        conectar();
+        state.executeUpdate("DELETE FROM usuario WHERE rutEmpleado='"+rut+"';");
+        connect.close();
+        estado = true;
+        return estado;         
+    }
 }

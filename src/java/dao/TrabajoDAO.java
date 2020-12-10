@@ -59,5 +59,15 @@ public class TrabajoDAO {
         }
         connect.close();
         return numeroTrabajos;
+    }  
+    
+    public static boolean  eliminar(String rut) throws SQLException
+    {
+        boolean estado=false;
+        conectar();
+        state.executeUpdate("DELETE FROM trabajo WHERE rutEmpleado='"+rut+"';");
+        connect.close();
+        estado = true;
+        return estado;         
     }
 }

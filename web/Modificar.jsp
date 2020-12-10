@@ -42,7 +42,16 @@
                 }
                 %>
     <%
-        Usuario usuario = UsuarioDAO.buscar(user.getUsername());
+        String rut = request.getParameter("rut");
+        Usuario usuario = new Usuario();
+        if(rut != null)
+        {
+            usuario = UsuarioDAO.buscarRut(rut);
+        }
+        else
+        {
+            usuario = UsuarioDAO.buscar(user.getUsername());
+        }
         Persona persona = PersonaDAO.buscar(usuario.getRutEmpleado());
         int contactos = ContactoDAO.getNumeroContactos(persona.getRut());
         int cargas = CargaDAO.getNumeroCargas(persona.getRut());
@@ -54,6 +63,8 @@
             <h1>MODIFICAR</h1>
             <form action="ControladorModificarUsuario" method="POST" onsubmit="return validacion();">
                         <h2><%out.println(nombreCompleto);%></h2>
+                        <label for="rut">Rut: </label>
+                        <input type="text" name="rut" value="<%=persona.getRut()%>" readonly="readonly"><br><br>
                         <label for="contacto">Cambiar Contacto de Emergencia</label>
                         <input placeholder="Contactos actuales: <%=contactos%>" type="number" name="contactos" min="0" value="0"><br><br>
                         <label for="contacto">Añadir Cargas</label>
