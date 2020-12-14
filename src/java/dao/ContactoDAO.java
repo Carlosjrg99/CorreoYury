@@ -33,7 +33,7 @@ public class ContactoDAO {
          return sw;
     }
     
-    public static void agregarContacto(String rut, String numeroTelefonico, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    public static void agregarContacto(String rut, String numeroTelefonico, String nombre, String apellidoPaterno, String apellidoMaterno, String relacion) throws SQLException
     {
         //método que agrega carga a un usuario existente
         conectar();
@@ -42,7 +42,8 @@ public class ContactoDAO {
                 "','"+numeroTelefonico+
                 "','"+nombre+
                 "','"+apellidoPaterno+
-                "','"+apellidoMaterno+"');");
+                "','"+apellidoMaterno+
+                "','"+relacion+"');");
         connect.close();
     }
        

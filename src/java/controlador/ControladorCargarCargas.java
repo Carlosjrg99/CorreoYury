@@ -47,6 +47,7 @@ public class ControladorCargarCargas extends HttpServlet {
             String nombreCarga;
             String apellidoP;
             String apellidoM;
+            String parentesco;
             HttpSession sesion = request.getSession(true);
             Usuario carga = (Usuario) sesion.getAttribute("usuarioMod");
             int numCargas = (int) sesion.getAttribute("numeroCargasMod");
@@ -55,7 +56,8 @@ public class ControladorCargarCargas extends HttpServlet {
                 nombreCarga=request.getParameter("nombre"+i);
                 apellidoP=request.getParameter("apellidoPaterno"+i);
                 apellidoM=request.getParameter("apellidoMaterno"+i);
-                CargaDAO.agregarCarga(carga.getRutEmpleado(), nombreCarga, apellidoP, apellidoM);
+                parentesco=request.getParameter("parentesco"+i);
+                CargaDAO.agregarCarga(carga.getRutEmpleado(), nombreCarga, apellidoP, apellidoM, parentesco);
             }
             if((Integer) sesion.getAttribute("numeroContactosMod") > 0)
             {

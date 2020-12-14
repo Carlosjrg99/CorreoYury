@@ -6,7 +6,8 @@ public class Persona
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String cargo;
+    private String fechaCreacion;
+    private String genero;
     private int estado;  // 0 activo, 3 eliminado...etc
 
     public Persona() 
@@ -15,17 +16,19 @@ public class Persona
         nombre = null;
         apellidoPaterno = null;
         apellidoMaterno = null;
-        cargo = null;
+        fechaCreacion = null;
+        genero = null;
         estado = 0;
     }
 
-    public Persona(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String cargo, int estado) 
+    public Persona(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String fechaCreacion, String genero, int estado) 
     {
         this.rut = rut;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.cargo = cargo;
+        this.fechaCreacion = fechaCreacion;
+        this.genero = genero;
         this.estado = estado;
     }
 
@@ -61,12 +64,20 @@ public class Persona
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public int getEstado() {

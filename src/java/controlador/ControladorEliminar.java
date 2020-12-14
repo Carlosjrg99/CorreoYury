@@ -7,6 +7,7 @@ package controlador;
 
 import dao.CargaDAO;
 import dao.ContactoDAO;
+import dao.EmpleoDAO;
 import dao.PersonaDAO;
 import dao.TrabajoDAO;
 import dao.UsuarioDAO;
@@ -49,6 +50,7 @@ public class ControladorEliminar extends HttpServlet {
                 ContactoDAO.eliminar(rut);
                 TrabajoDAO.eliminar(rut);
                 UsuarioDAO.eliminar(rut);
+                EmpleoDAO.eliminar(rut);
                 PersonaDAO.eliminar(rut);
                 response.sendRedirect("MensajeOk.jsp?mensaje=Empleado Eliminado<br>Rut: &username="+rut);
             }

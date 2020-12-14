@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 10, 2020 at 03:30 AM
+-- Generation Time: Dec 14, 2020 at 04:54 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -33,18 +33,21 @@ CREATE TABLE `carga` (
   `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
   `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
-  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL
+  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL,
+  `parentesco` varchar(15) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `carga`
 --
 
-INSERT INTO `carga` (`id_carga`, `rutEmpleado`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
-(1, '2222222-2', 'Felipe', 'Marambio', 'Rodriguez'),
-(2, '2222222-2', 'Marian', 'Marambio', 'Rodriguez'),
-(3, '2222222-2', 'Sebastian', 'Marambio', 'Rodriguez'),
-(4, '33333333-3', 'Alberto', 'Rosales', 'Ramirez');
+INSERT INTO `carga` (`id_carga`, `rutEmpleado`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `parentesco`) VALUES
+(1, '2222222-2', 'Felipe', 'Marambio', 'Rodriguez', 'hijo'),
+(2, '2222222-2', 'Marian', 'Marambio', 'Rodriguez', 'hija'),
+(3, '2222222-2', 'Sebastian', 'Marambio', 'Rodriguez', 'hijo'),
+(4, '33333333-3', 'Alberto', 'Rosales', 'Ramirez', 'hijo'),
+(5, '33333333-3', 'Felipe', 'Rosales', 'Romero', 'hijo'),
+(6, '33333333-3', 'Mariana', 'Rodriguez', 'Ramirez', 'hija');
 
 -- --------------------------------------------------------
 
@@ -58,18 +61,19 @@ CREATE TABLE `contacto` (
   `numeroTelefonico` varchar(20) COLLATE utf8_bin NOT NULL,
   `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
-  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL
+  `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL,
+  `relacion` varchar(15) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `contacto`
 --
 
-INSERT INTO `contacto` (`id_contacto`, `rutEmpleado`, `numeroTelefonico`, `nombre`, `apellidoPaterno`, `apellidoMaterno`) VALUES
-(1, '2222222-2', '905151519', 'Marian', 'Rodriguez', 'Romero'),
-(2, '2222222-2', '912121213', 'Franchesca', 'Vasquez', 'Ramirez'),
-(3, '33333333-3', '907151512', 'Mariana', 'Ramirez', 'Ron'),
-(4, '33333333-3', '912121212', 'Mariano', 'Ramirez', 'Ron');
+INSERT INTO `contacto` (`id_contacto`, `rutEmpleado`, `numeroTelefonico`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `relacion`) VALUES
+(1, '2222222-2', '905151519', 'Marian', 'Rodriguez', 'Romero', 'esposa'),
+(2, '2222222-2', '912121213', 'Franchesca', 'Vasquez', 'Ramirez', 'amiga'),
+(3, '33333333-3', '907151512', 'Mariana', 'Ramirez', 'Ron', 'esposa'),
+(4, '33333333-3', '912121212', 'Mariano', 'Ramirez', 'Ron', 'cuñado');
 
 -- --------------------------------------------------------
 
@@ -83,6 +87,7 @@ CREATE TABLE `persona` (
   `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL,
   `cargo` varchar(20) COLLATE utf8_bin NOT NULL,
+  `sexo` varchar(10) COLLATE utf8_bin NOT NULL,
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -90,10 +95,11 @@ CREATE TABLE `persona` (
 -- Dumping data for table `persona`
 --
 
-INSERT INTO `persona` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `cargo`, `estado`) VALUES
-('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 'Recursos Humanos', 0),
-('2222222-2', 'Carlos', 'Marambio', 'Perez', 'Cargo Tipo 1', 0),
-('33333333-3', 'Carlos', 'Rosales', 'Dominguez', 'Cargo tipo 2', 0);
+INSERT INTO `persona` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `cargo`, `sexo`, `estado`) VALUES
+('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 'Recursos Humanos', 'Femenino', 0),
+('1111121-1', 'El', 'Imi', 'Nado', 'Cargo tipo 2', '', 3),
+('2222222-2', 'Carlos', 'Marambio', 'Perez', 'Cargo Tipo 1', 'Masculino', 0),
+('33333333-3', 'Carlos', 'Rosales', 'Dominguez', 'Cargo tipo 2', 'Masculino', 0);
 
 -- --------------------------------------------------------
 
@@ -187,7 +193,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `carga`
 --
 ALTER TABLE `carga`
-  MODIFY `id_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `contacto`

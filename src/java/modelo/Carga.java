@@ -6,6 +6,7 @@ public class Carga {
     private String Nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
+    private String parentesco;
     
     public Carga()
     {
@@ -14,14 +15,16 @@ public class Carga {
         Nombre = null;
         apellidoPaterno = null;
         apellidoMaterno = null;
+        parentesco = null;
     }        
     
-    public Carga(int id_carga, String rutEmpleado, String Nombre, String apellidoPaterno, String apellidoMaterno) {
+    public Carga(int id_carga, String rutEmpleado, String Nombre, String apellidoPaterno, String apellidoMaterno, String parentesco) {
         this.id_carga = id_carga;
         this.rutEmpleado = rutEmpleado;
         this.Nombre = Nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+        this.parentesco = parentesco;
     }
 
     public int getId_carga() {
@@ -62,5 +65,13 @@ public class Carga {
 
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
     }
 }

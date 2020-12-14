@@ -10,8 +10,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import modelo.Usuario;
 
 /**
  *
@@ -44,7 +42,7 @@ public class CargaDAO {
          return sw;
     }
     
-    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno) throws SQLException
+    public static void agregarCarga(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String parentesco) throws SQLException
     {
         //método que agrega carga a un usuario existente
         conectar();
@@ -52,7 +50,8 @@ public class CargaDAO {
                 ",'"+rut+
                 "','"+nombre+
                 "','"+apellidoPaterno+
-                "','"+apellidoMaterno+"');");
+                "','"+apellidoMaterno+
+                "','"+parentesco+"');");
         connect.close();
     }
     

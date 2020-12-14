@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registrar Trabajos/<title>
+        <title>Registrar Trabajos</title>
         <style>
             table, th, td 
             {

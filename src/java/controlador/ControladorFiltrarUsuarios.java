@@ -1,21 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controlador;
 
-import dao.ContactoDAO;
+import dao.EmpleoDAO;
+import dao.PersonaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Usuario;
+import modelo.Persona;
 
-@WebServlet(name = "ControladorCargarContactos", urlPatterns = {"/ControladorCargarContactos"})
-public class ControladorCargarContactos extends HttpServlet {
+/**
+ *
+ * @author Carlo
+ */
+public class ControladorFiltrarUsuarios extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,44 +39,49 @@ public class ControladorCargarContactos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String opcion=request.getParameter("opcion");
-            if(opcion.equals("Cargar"))
+            String opcion = request.getParameter("opcion");
+            ArrayList<Persona> persona;
+            String genero = "";
+            String cargo = "";
+            String area = "";
+            String departamento = "";
+            int op = 0;
+            if(opcion.equals("Filtrar"))
             {
-                //Para agregar cargas en la BD un usuario existente
-                //Posterior a Grabar en el caso de indicar cargas
-                String numeroTelefonico;
-                String nombreContacto;
-                String apellidoP;
-                String apellidoM;
-                String relacion;
-                HttpSession sesion = request.getSession(true);
-                Usuario contacto = (Usuario) sesion.getAttribute("usuarioMod");
-                int numContactos = (int) sesion.getAttribute("numeroContactosMod");
-                for(int i = 1;i <= numContactos;i++) 
-                {
-                    numeroTelefonico=request.getParameter("numeroTelefonico"+i);
-                    nombreContacto=request.getParameter("nombre"+i);
-                    apellidoP=request.getParameter("apellidoPaterno"+i);
-                    apellidoM=request.getParameter("apellidoMaterno"+i);
-                    relacion=request.getParameter("relacion"+i);
-                    ContactoDAO.agregarContacto(contacto.getRutEmpleado(), numeroTelefonico, nombreContacto, apellidoP, apellidoM, relacion);
+                genero = request.getParameter("genero");
+                cargo = request.getParameter("cargo");
+                area = request.getParameter("area");
+                departamento = request.getParameter("departamento");
+                if(cargo != null){
+                    op+=1;
                 }
-                if((Integer) sesion.getAttribute("numeroTrabajosMod") > 0)
-                {
-                    response.sendRedirect("AgregarTrabajo.jsp?rut="+contacto.getRutEmpleado());
+                if(area != null){
+                    op+=2;
                 }
-                else
-                {
-                    response.sendRedirect("MensajeOk.jsp?mensaje=Cargas agregadas<br>Para apoderado: &username="+contacto.getUsername());
+                if(departamento != null){
+                    op+=4;
                 }
+                persona = EmpleoDAO.filtrar(op, cargo, area, departamento, genero);
+                
+                if(op == 0 && genero == null)
+                {
+                    persona = PersonaDAO.getArreglo();
+                }
+                
+                //response.sendRedirect("MensajeOk.jsp?mensaje="+genero);
+                //response.sendRedirect("MensajeOk.jsp?mensaje="+String.valueOf(op));
+                //response.sendRedirect("MensajeOk.jsp?mensaje="+persona.get(0).getRut());
+                
+                request.getSession().setAttribute("filtrado", persona);
+                response.sendRedirect("listar.jsp");
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorCargarContactos</title>");            
+            out.println("<title>Servlet ControladorFiltrarUsuarios</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorCargarContactos at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorFiltrarUsuarios at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -89,7 +102,7 @@ public class ControladorCargarContactos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorFiltrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,7 +120,7 @@ public class ControladorCargarContactos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorCargarContactos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorFiltrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

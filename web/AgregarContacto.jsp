@@ -61,6 +61,7 @@
                         <th>Nombre
                         <th>Apellido Paterno
                         <th>Apellido Materno
+                        <th>Relación
                 </tr>
                 </thead>
                 <tbody><%
@@ -70,6 +71,7 @@
                             out.println("<td><input type='text' name='nombre"+i+"' required=''></td>");
                             out.println("<td><input type='text' name='apellidoPaterno"+i+"' required=''></td>");
                             out.println("<td><input type='text' name='apellidoMaterno"+i+"' required=''></td>");
+                            out.println("<td><input type='text' name='relacion"+i+"' required=''></td>");
                             out.println("</tr>");
                         
                     

@@ -20,6 +20,10 @@
         <servlet-name>ControladorEliminar</servlet-name>
         <servlet-class>controlador.ControladorEliminar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorFiltrarUsuarios</servlet-name>
+        <servlet-class>controlador.ControladorFiltrarUsuarios</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorLogin</servlet-name>
         <url-pattern>/ControladorLogin</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ControladorEliminar</servlet-name>
         <url-pattern>/ControladorEliminar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorFiltrarUsuarios</servlet-name>
+        <url-pattern>/ControladorFiltrarUsuarios</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

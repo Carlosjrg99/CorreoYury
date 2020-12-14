@@ -47,6 +47,11 @@
                     <input type="text" name="apellidoPaterno" class="validate" required=""><br><br>
                     <label for="apellidoMaterno">Apellido Materno</label>
                     <input type="text" name="apellidoMaterno" class="validate" required=""><br><br>
+                    <label for="genero">Género: </label><br>
+                    <input type="radio" value="Masculino" name="genero">
+                    Masculino<br>
+                    <input type="radio" value="Femenino" name="genero">
+                    Femenino<br><br>
                     <label for="password">Password</label>
                     <input type="password" name="password" class="validate" required=""><br><br>
                     <label for="tipoUsuario">Tipo de Usuario</label>

@@ -13,6 +13,8 @@
         <%
                 Usuario user=null;
                 String estadoSesion="off";
+                
+                request.getSession().setAttribute("filtrado", null);
 
                 HttpSession sesion = request.getSession(true);
 
