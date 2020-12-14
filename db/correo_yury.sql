@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 14, 2020 at 04:54 PM
+-- Generation Time: Dec 14, 2020 at 11:37 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -45,9 +45,7 @@ INSERT INTO `carga` (`id_carga`, `rutEmpleado`, `nombre`, `apellidoPaterno`, `ap
 (1, '2222222-2', 'Felipe', 'Marambio', 'Rodriguez', 'hijo'),
 (2, '2222222-2', 'Marian', 'Marambio', 'Rodriguez', 'hija'),
 (3, '2222222-2', 'Sebastian', 'Marambio', 'Rodriguez', 'hijo'),
-(4, '33333333-3', 'Alberto', 'Rosales', 'Ramirez', 'hijo'),
-(5, '33333333-3', 'Felipe', 'Rosales', 'Romero', 'hijo'),
-(6, '33333333-3', 'Mariana', 'Rodriguez', 'Ramirez', 'hija');
+(8, '5555555-5', 'Felipe', 'Rosales', 'Benitez', 'hijo');
 
 -- --------------------------------------------------------
 
@@ -72,8 +70,33 @@ CREATE TABLE `contacto` (
 INSERT INTO `contacto` (`id_contacto`, `rutEmpleado`, `numeroTelefonico`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `relacion`) VALUES
 (1, '2222222-2', '905151519', 'Marian', 'Rodriguez', 'Romero', 'esposa'),
 (2, '2222222-2', '912121213', 'Franchesca', 'Vasquez', 'Ramirez', 'amiga'),
-(3, '33333333-3', '907151512', 'Mariana', 'Ramirez', 'Ron', 'esposa'),
-(4, '33333333-3', '912121212', 'Mariano', 'Ramirez', 'Ron', 'cuñado');
+(6, '5555555-5', '907151523', 'Felipe', 'Rosales', 'Andrade', 'esposo');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `empleo`
+--
+
+CREATE TABLE `empleo` (
+  `id_empleo` int(11) NOT NULL,
+  `rutEmpleado` varchar(20) COLLATE utf8_bin NOT NULL,
+  `cargo` varchar(20) COLLATE utf8_bin NOT NULL,
+  `area` varchar(20) COLLATE utf8_bin NOT NULL,
+  `departamento` varchar(20) COLLATE utf8_bin NOT NULL,
+  `fechaInicio` varchar(20) COLLATE utf8_bin NOT NULL,
+  `fechaFin` varchar(20) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `empleo`
+--
+
+INSERT INTO `empleo` (`id_empleo`, `rutEmpleado`, `cargo`, `area`, `departamento`, `fechaInicio`, `fechaFin`) VALUES
+(1, '1111101-1', 'Miembro', 'Administracion', 'Recursos Humanos', '2001-01-01', '2020-05-04'),
+(2, '1111111-1', 'Miembro', 'Administracion', 'Recursos Humanos', '2020-05-05', 'N/R'),
+(3, '5555555-5', 'Cargo tipo 3', 'Area 3', 'Departamento 3', '2020-12-14', 'N/R'),
+(4, '2222222-2', 'Cargo Tipo 1', 'Area 1', 'Departamento 1', '2020-12-15', 'N/R');
 
 -- --------------------------------------------------------
 
@@ -86,7 +109,7 @@ CREATE TABLE `persona` (
   `nombre` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoPaterno` varchar(20) COLLATE utf8_bin NOT NULL,
   `apellidoMaterno` varchar(20) COLLATE utf8_bin NOT NULL,
-  `cargo` varchar(20) COLLATE utf8_bin NOT NULL,
+  `fechaCreacion` varchar(20) COLLATE utf8_bin NOT NULL,
   `sexo` varchar(10) COLLATE utf8_bin NOT NULL,
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -95,11 +118,11 @@ CREATE TABLE `persona` (
 -- Dumping data for table `persona`
 --
 
-INSERT INTO `persona` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `cargo`, `sexo`, `estado`) VALUES
-('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', 'Recursos Humanos', 'Femenino', 0),
-('1111121-1', 'El', 'Imi', 'Nado', 'Cargo tipo 2', '', 3),
-('2222222-2', 'Carlos', 'Marambio', 'Perez', 'Cargo Tipo 1', 'Masculino', 0),
-('33333333-3', 'Carlos', 'Rosales', 'Dominguez', 'Cargo tipo 2', 'Masculino', 0);
+INSERT INTO `persona` (`rut`, `nombre`, `apellidoPaterno`, `apellidoMaterno`, `fechaCreacion`, `sexo`, `estado`) VALUES
+('1111101-1', 'El', 'Imi', 'Nado', '2001-01-01', 'Masculino', 3),
+('1111111-1', 'Rebecca', 'Vasquez', 'Nunez', '2020-05-05', 'Femenino', 0),
+('2222222-2', 'Carlos', 'Marambio', 'Perez', '2020-12-20', 'Masculino', 0),
+('5555555-5', 'Valentina', 'Benitez', 'Bermudez', '2020-12-14', 'Femenino', 0);
 
 -- --------------------------------------------------------
 
@@ -121,9 +144,7 @@ CREATE TABLE `trabajo` (
 --
 
 INSERT INTO `trabajo` (`id_trabajo`, `rutEmpleado`, `cargo`, `empresa`, `fechaInicio`, `fechaFin`) VALUES
-(1, '33333333-3', 'Fisico Culturista', 'Pacific Gym', '2020-09-01', '2020-10-01'),
-(2, '33333333-3', 'Astronauta', 'NASA', '2020-10-02', '2020-11-02'),
-(3, '33333333-3', 'Profesor', 'INACAP', '2020-11-03', '2020-12-08');
+(5, '5555555-5', 'Fisico Culturista', 'Pacific Gym', '2020-12-01', '2020-12-09');
 
 -- --------------------------------------------------------
 
@@ -144,8 +165,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`username`, `rutEmpleado`, `password`, `tipoUsuario`) VALUES
 ('cmarambio0', '2222222-2', '123456', 2),
-('crosales0', '33333333-3', '123456', 2),
-('rvasquez0', '1111111-1', '123456', 1);
+('rvasquez0', '1111111-1', '123456', 1),
+('vbenitez0', '5555555-5', '123456', 2);
 
 --
 -- Indexes for dumped tables
@@ -163,6 +184,13 @@ ALTER TABLE `carga`
 --
 ALTER TABLE `contacto`
   ADD PRIMARY KEY (`id_contacto`),
+  ADD KEY `rutEmpleado` (`rutEmpleado`);
+
+--
+-- Indexes for table `empleo`
+--
+ALTER TABLE `empleo`
+  ADD PRIMARY KEY (`id_empleo`),
   ADD KEY `rutEmpleado` (`rutEmpleado`);
 
 --
@@ -193,19 +221,25 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `carga`
 --
 ALTER TABLE `carga`
-  MODIFY `id_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_carga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `empleo`
+--
+ALTER TABLE `empleo`
+  MODIFY `id_empleo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `trabajo`
 --
 ALTER TABLE `trabajo`
-  MODIFY `id_trabajo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_trabajo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -222,6 +256,12 @@ ALTER TABLE `carga`
 --
 ALTER TABLE `contacto`
   ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
+
+--
+-- Constraints for table `empleo`
+--
+ALTER TABLE `empleo`
+  ADD CONSTRAINT `empleo_ibfk_1` FOREIGN KEY (`rutEmpleado`) REFERENCES `persona` (`rut`);
 
 --
 -- Constraints for table `trabajo`
